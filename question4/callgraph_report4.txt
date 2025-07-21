@@ -1,0 +1,863 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind4.out' (creator: callgrind-3.22.0)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 374031
+Trigger: Program termination
+Profiled target:  ./randomGraph2 -v 5 -e 8 -r 80 (PID 55205, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+Ir                 
+--------------------------------------------------------------------------------
+2,064,939 (100.0%)  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+Ir                file:function
+--------------------------------------------------------------------------------
+511,427 (24.77%)  ./elf/./elf/dl-lookup.c:do_lookup_x [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+492,982 (23.87%)  ./elf/../sysdeps/generic/dl-new-hash.h:_dl_lookup_symbol_x
+189,535 ( 9.18%)  ./elf/./elf/dl-lookup.c:_dl_lookup_symbol_x [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+147,941 ( 7.16%)  ./elf/./elf/dl-reloc.c:_dl_relocate_object [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+115,616 ( 5.60%)  ./elf/./elf/dl-lookup.c:check_match [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+112,361 ( 5.44%)  ./elf/../sysdeps/x86_64/dl-machine.h:_dl_relocate_object
+111,274 ( 5.39%)  ./elf/./elf/do-rel.h:_dl_relocate_object
+ 70,053 ( 3.39%)  ./string/../sysdeps/x86_64/multiarch/../multiarch/strcmp-sse2.S:strcmp [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+ 25,221 ( 1.22%)  ./elf/./elf/dl-tunables.c:__GI___tunables_init [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+ 16,814 ( 0.81%)  ./libio/./libio/iofwrite.c:fwrite [/usr/lib/x86_64-linux-gnu/libc.so.6]
+ 16,003 ( 0.77%)  ./elf/./elf/dl-version.c:_dl_check_map_versions [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+ 14,893 ( 0.72%)  ./libio/./libio/fileops.c:_IO_file_xsputn@@GLIBC_2.2.5 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+ 12,192 ( 0.59%)  ???:std::locale::_Impl::_M_install_facet(std::locale::id const*, std::locale::facet const*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+ 10,490 ( 0.51%)  ./elf/../sysdeps/generic/ldsodefs.h:_dl_relocate_object
+  9,695 ( 0.47%)  ./elf/../sysdeps/generic/ldsodefs.h:do_lookup_x
+  9,514 ( 0.46%)  ./elf/./elf/dl-runtime.c:_dl_fixup [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  9,216 ( 0.45%)  ./wcsmbs/./wcsmbs/btowc.c:btowc [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  8,064 ( 0.39%)  ./libio/./libio/iofread.c:fread [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  7,756 ( 0.38%)  ./elf/../sysdeps/generic/dl-protected.h:do_lookup_x
+  7,250 ( 0.35%)  ???:gcov_do_dump.constprop.0 [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+  6,212 ( 0.30%)  ./stdlib/./stdlib/random_r.c:srandom_r [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  5,906 ( 0.29%)  ./libio/./libio/fileops.c:_IO_file_xsgetn [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  5,004 ( 0.24%)  ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:__mempcpy_avx_unaligned_erms [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  4,425 ( 0.21%)  ./libio/./libio/libioP.h:fwrite
+  3,936 ( 0.19%)  ./elf/../sysdeps/x86_64/dl-trampoline.h:_dl_runtime_resolve_xsave [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  3,856 ( 0.19%)  ./elf/./elf/dl-load.c:_dl_map_object_from_fd [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  3,727 ( 0.18%)  ???:0x00000000000200e0 [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+  3,536 ( 0.17%)  ./string/../sysdeps/x86_64/multiarch/strlen-avx2.S:__strlen_avx2 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  3,360 ( 0.16%)  ???:gcov_read_bytes [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+  3,208 ( 0.16%)  ./elf/./elf/dl-misc.c:_dl_name_match_p [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  3,200 ( 0.15%)  ./wcsmbs/./wcsmbs/wctob.c:wctob [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  3,096 ( 0.15%)  ./elf/../sysdeps/x86/dl-cacheinfo.h:intel_check_word.constprop.0 [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  2,799 ( 0.14%)  ./elf/./elf/dl-cache.c:_dl_cache_libcmp [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  2,745 ( 0.13%)  ./elf/./elf/dl-tunables.h:__GI___tunables_init
+  2,736 ( 0.13%)  ???:std::ctype<wchar_t>::_M_initialize_ctype() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  2,688 ( 0.13%)  ./malloc/./malloc/malloc.c:_int_malloc [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  2,406 ( 0.12%)  ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:__memcpy_avx_unaligned_erms [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  2,378 ( 0.12%)  ./elf/./elf/dl-deps.c:_dl_map_object_deps [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  2,367 ( 0.11%)  ./elf/./elf/dl-load.c:_dl_map_object [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  2,268 ( 0.11%)  ./elf/../bits/stdlib-bsearch.h:intel_check_word.constprop.0
+  2,039 ( 0.10%)  ???:std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  1,848 ( 0.09%)  ./libio/./libio/libioP.h:fread
+  1,809 ( 0.09%)  ./elf/./elf/get-dynamic-info.h:_dl_map_object_from_fd
+  1,680 ( 0.08%)  ./libio/./libio/genops.c:_IO_sgetn [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  1,631 ( 0.08%)  ???:0x0000000000021560 [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+  1,549 ( 0.08%)  ???:std::ostream::sentry::sentry(std::ostream&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  1,495 ( 0.07%)  ???:0x0000000000022510 [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+  1,476 ( 0.07%)  ???:_Unwind_Find_FDE [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+  1,339 ( 0.06%)  ./elf/./elf/dl-minimal-malloc.c:__minimal_malloc [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  1,311 ( 0.06%)  ???:std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  1,297 ( 0.06%)  ???:std::ostream& std::ostream::_M_insert<long>(long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  1,287 ( 0.06%)  ???:0x00000000000ba1a0 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  1,276 ( 0.06%)  ./stdlib/./stdlib/getenv.c:getenv [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  1,260 ( 0.06%)  ./elf/./elf/rtld.c:dl_main [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  1,197 ( 0.06%)  ./libio/./libio/fileops.c:_IO_file_overflow@@GLIBC_2.2.5 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  1,116 ( 0.05%)  ./elf/./elf/dl-object.c:_dl_new_object [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  1,104 ( 0.05%)  ./elf/./elf/dl-cache.c:_dl_load_cache_lookup [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+  1,095 ( 0.05%)  ./string/../sysdeps/x86_64/multiarch/memcmp-avx2-movbe.S:__memcmp_avx2_movbe [/usr/lib/x86_64-linux-gnu/libc.so.6]
+  1,080 ( 0.05%)  ???:std::locale::id::_M_id() const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+  1,066 ( 0.05%)  ./wctype/./wctype/wctype_l.c:wctype_l [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    984 ( 0.05%)  ???:__gcov_read_counter [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+    964 ( 0.05%)  ???:__gxx_personality_v0 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    961 ( 0.05%)  ./malloc/./malloc/malloc.c:_int_free [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    908 ( 0.04%)  ./elf/./elf/dl-tunables.c:__tunable_get_val [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    874 ( 0.04%)  ./malloc/./malloc/malloc.c:malloc [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    871 ( 0.04%)  ./string/../sysdeps/x86_64/multiarch/../multiarch/memset-vec-unaligned-erms.S:memset [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    840 ( 0.04%)  ./libio/./libio/libioP.h:_IO_sgetn
+    836 ( 0.04%)  ./string/../sysdeps/x86_64/multiarch/../multiarch/strlen-sse2.S:strlen [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    814 ( 0.04%)  ./stdlib/./stdlib/cxa_finalize.c:__cxa_finalize [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    792 ( 0.04%)  ./string/../sysdeps/x86_64/multiarch/../multiarch/strchr-sse2.S:index [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    771 ( 0.04%)  ./malloc/./malloc/malloc.c:ptmalloc_init.part.0
+    768 ( 0.04%)  ./iconv/./iconv/gconv_simple.c:__gconv_btwoc_ascii [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    754 ( 0.04%)  ???:std::ctype<char>::_M_widen_init() const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    722 ( 0.03%)  ./elf/./elf/dl-load.c:open_path [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    695 ( 0.03%)  ./elf/./dl-map-segments.h:_dl_map_object_from_fd
+    673 ( 0.03%)  ???:std::locale::_Impl::_Impl(unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    660 ( 0.03%)  ./libio/./libio/fileops.c:_IO_do_write@@GLIBC_2.2.5 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    655 ( 0.03%)  /usr/include/c++/13/bits/stl_bvector.h:std::vector<bool, std::allocator<bool> >::vector(std::vector<bool, std::allocator<bool> > const&) [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+    640 ( 0.03%)  ./elf/./elf/libc-dl-profstub.c:_dl_mcount_wrapper_check [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    630 ( 0.03%)  ./libio/./libio/iofflush.c:fflush [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    628 ( 0.03%)  ./elf/./elf/dl-load.c:open_verify.constprop.0 [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    604 ( 0.03%)  ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:memcpy [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    601 ( 0.03%)  ./misc/../sysdeps/unix/sysv/linux/mmap64.c:mmap [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    594 ( 0.03%)  ???:0x0000000000146900 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    586 ( 0.03%)  ???:0x0000000004b1f430 [???]
+    584 ( 0.03%)  ???:std::ostream::flush() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    575 ( 0.03%)  ???:__gcov_merge_add [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+    548 ( 0.03%)  ./elf/./elf/dl-sort-maps.c:dfs_traversal.part.0 [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    546 ( 0.03%)  ./elf/./elf/dl-catch.c:_dl_catch_exception [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    544 ( 0.03%)  ./elf/./elf/dl-hwcaps_split.c:_dl_hwcaps_split_masked [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    534 ( 0.03%)  ./elf/../sysdeps/nptl/dl-tls_init_tp.c:rtld_mutex_dummy [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    517 ( 0.03%)  ???:0x00000000048efb80 [???]
+    516 ( 0.02%)  ./elf/../sysdeps/x86/dl-cacheinfo.h:handle_intel.constprop.0 [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    512 ( 0.02%)  ./malloc/./malloc/malloc.c:free [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    512 ( 0.02%)  ./wcsmbs/./wcsmbsload.h:btowc
+    504 ( 0.02%)  ./libio/../string/bits/string_fortified.h:_IO_file_xsgetn
+    504 ( 0.02%)  ./stdlib/./stdlib/random_r.c:random_r [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    500 ( 0.02%)  ???:0x000000000010a6f0 [???]
+    490 ( 0.02%)  ./elf/./elf/dl-init.c:call_init.part.0 [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    484 ( 0.02%)  ???:0x0000000000142070 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    484 ( 0.02%)  ???:std::locale::locale() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    484 ( 0.02%)  ???:std::ostream::put(char) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    481 ( 0.02%)  ./posix/./posix/getopt.c:_getopt_internal_r [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    480 ( 0.02%)  ???:std::ios_base::ios_base() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    468 ( 0.02%)  ./stdlib/./stdlib/cxa_atexit.c:__cxa_atexit [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    462 ( 0.02%)  ./libio/./libio/fileops.c:_IO_file_sync@@GLIBC_2.2.5 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    458 ( 0.02%)  ./libio/./libio/fileops.c:_IO_file_write@@GLIBC_2.2.5 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    441 ( 0.02%)  ./elf/./dl-find_object.h:_dl_find_object_from_map [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    440 ( 0.02%)  ./stdlib/./stdlib/cxa_atexit.c:__new_exitfn [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    417 ( 0.02%)  ???:std::__cxx11::numpunct<char>::_M_initialize_numpunct(__locale_struct*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    417 ( 0.02%)  ???:std::numpunct<char>::_M_initialize_numpunct(__locale_struct*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    414 ( 0.02%)  ./stdlib/./stdlib/random.c:random [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    396 ( 0.02%)  ???:0x000000000001ff00 [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+    388 ( 0.02%)  ???:0x000000000001fc00 [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+    388 ( 0.02%)  ???:0x00000000000247a0 [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+    386 ( 0.02%)  ./elf/./get-dynamic-info.h:dl_main
+    380 ( 0.02%)  ???:0x00000000000ba310 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    375 ( 0.02%)  ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:mempcpy [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    374 ( 0.02%)  ./elf/./elf/dl-sort-maps.c:_dl_sort_maps [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    366 ( 0.02%)  ./string/../sysdeps/x86_64/multiarch/strcmp-avx2.S:__strncmp_avx2 [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    364 ( 0.02%)  ???:__cpu_indicator_init [/usr/lib/x86_64-linux-gnu/libgcc_s.so.1]
+    363 ( 0.02%)  ./elf/./elf/dl-find_object.c:_dl_find_object [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    359 ( 0.02%)  ../question2/Graph.cpp:Graph::isConnected() [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+    353 ( 0.02%)  ???:std::__cxx11::numpunct<wchar_t>::_M_initialize_numpunct(__locale_struct*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    353 ( 0.02%)  ???:std::numpunct<wchar_t>::_M_initialize_numpunct(__locale_struct*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    340 ( 0.02%)  ./elf/../elf/dl-tls.c:_dl_allocate_tls_storage [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    336 ( 0.02%)  ???:0x000000000010a630 [???]
+    336 ( 0.02%)  ???:0x0000000004b1f6b0 [???]
+    334 ( 0.02%)  ./setjmp/../sysdeps/x86_64/setjmp.S:__sigsetjmp [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    326 ( 0.02%)  ./libio/./libio/genops.c:_IO_default_xsputn [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    320 ( 0.02%)  ./stdlib/../stdlib/strtol_l.c:____strtol_l_internal [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    318 ( 0.02%)  ./elf/./elf/dl-load.c:_dl_init_paths [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    315 ( 0.02%)  ./libio/./libio/libioP.h:fflush
+    306 ( 0.01%)  ./elf/./elf/dl-load.c:_dl_process_pt_gnu_property [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    304 ( 0.01%)  ./elf/./elf/dl-environ.c:_dl_next_ld_env_entry [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    301 ( 0.01%)  ./elf/./elf/dl-object.c:_dl_add_to_namespace_list [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    298 ( 0.01%)  ???:0x00000000000ed260 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    297 ( 0.01%)  ./elf/./elf/dl-fini.c:_dl_fini [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    282 ( 0.01%)  ./elf/./elf/dl-find_object.c:_dlfo_process_initial [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    280 ( 0.01%)  ./elf/./elf/dl-tunables.c:__GI___tunable_set_val [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    276 ( 0.01%)  ./elf/./elf/dl-load.c:_dl_dst_count [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    274 ( 0.01%)  ./elf/./elf/dl-lookup-direct.c:_dl_lookup_direct [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    272 ( 0.01%)  ???:std::ios_base::Init::Init() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    271 ( 0.01%)  /usr/include/c++/13/bits/stl_bvector.h:Graph::isConnected()
+    270 ( 0.01%)  ???:__gnu_cxx::stdio_sync_filebuf<char, std::char_traits<char> >::xsputn(char const*, long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    269 ( 0.01%)  ../question3/randomGraph.cpp:main [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+    268 ( 0.01%)  ./elf/./get-dynamic-info.h:_dl_start
+    264 ( 0.01%)  ./elf/./elf/dl-deps.c:openaux [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    261 ( 0.01%)  ???:0x00000000048ee040 [???]
+    258 ( 0.01%)  ./io/../sysdeps/unix/sysv/linux/open64_nocancel.c:__open_nocancel [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    253 ( 0.01%)  ./libio/./libio/putc.c:putc [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    251 ( 0.01%)  ./elf/./elf/dl-call_fini.c:_dl_call_fini [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    248 ( 0.01%)  ./elf/./elf/dl-find_object.c:_dlfo_sort_mappings [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    248 ( 0.01%)  ./elf/./elf/dl-minimal.c:strsep [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    247 ( 0.01%)  ./elf/./elf/rtld.c:_dl_start [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    244 ( 0.01%)  ./stdlib/./stdlib/exit.c:__run_exit_handlers [/usr/lib/x86_64-linux-gnu/libc.so.6]
+    242 ( 0.01%)  ???:std::ostream::operator<<(int) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    241 ( 0.01%)  ../question2/Graph.cpp:Graph::printGraph() [/home/dotan/projects/semester_b/operationSystems/finalProject/question4/randomGraph2]
+    240 ( 0.01%)  ./string/../string/strcspn.c:strcspn [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    231 ( 0.01%)  ./elf/../sysdeps/x86/dl-cacheinfo.h:init_cpu_features.constprop.0
+    226 ( 0.01%)  ./elf/../sysdeps/unix/sysv/linux/dl-sysdep.c:_dl_sysdep_parse_arguments [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    224 ( 0.01%)  ???:operator new(unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    224 ( 0.01%)  ???:std::ios_base::_M_init() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+    223 ( 0.01%)  ./elf/../sysdeps/x86/dl-cacheinfo.h:get_common_cache_info.constprop.0 [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    222 ( 0.01%)  ./elf/./elf/dl-hwcaps.c:_dl_important_hwcaps [/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2]
+    221 ( 0.01%)  ???:0x00000000048ed800 [???]
+    210 ( 0.01%)  ???:std::locale::facet::_S_get_c_locale() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33]
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: ../question3/randomGraph.cpp
+--------------------------------------------------------------------------------
+Ir          
+
+ .           #include "../question2/Graph.hpp"
+ .           #include <iostream>
+ .           #include <unistd.h>
+ .           
+ .           extern char* optarg;
+ .           
+16 ( 0.00%)  int main(int argc, char* argv[]) {
+27 ( 0.00%)  => ./gmon/../sysdeps/x86_64/_mcount.S:mcount (1x)
+ .               if( argc != 4){
+ .               }
+ .               int opt;
+ 2 ( 0.00%)      int numOfVertex=-1;
+ 1 ( 0.00%)      int numOfEdges=-1;
+ 2 ( 0.00%)      int RandomSeed = -1;
+24 ( 0.00%)      while ((opt = getopt(argc, argv, "v:e:r:")) != -1){
+1,135 ( 0.05%)  => ???:0x000000000010a3d0 (4x)
+ 6 ( 0.00%)          if(opt == 'v'){
+ .                       numOfVertex=atoi(optarg);
+ .                   }
+ 5 ( 0.00%)          else if(opt == 'e'){
+ 1 ( 0.00%)              numOfEdges = atoi(optarg);;
+ 2 ( 0.00%)          }else if(opt == 'r'){
+ 1 ( 0.00%)              RandomSeed = atoi(optarg);;
+ .                   }
+ .               }
+ 6 ( 0.00%)      if(numOfEdges==-1 || numOfVertex==-1 || RandomSeed==-1){
+ .                   std::cerr<<"Usage: ./"<<argv[0]<<" -v numOfVertex (int) -e numOfEdge(int) -r Randomseed(int)"<<std::endl;
+ .                   exit(1);
+ .               }
+ 8 ( 0.00%)      unsigned long maxEdge = (numOfVertex -1)*numOfVertex/2;
+ 3 ( 0.00%)      if((unsigned long)numOfEdges>maxEdge){
+ .                   std::cerr<<"E"<<numOfEdges<<" maxEdge "<<maxEdge<<std::endl; 
+ .                   std::cerr<<"ypu enter too many edges"<<std::endl;
+ 1 ( 0.00%)          exit(1);
+ .               }
+ 1 ( 0.00%)      int edgesAdded=0;
+ 4 ( 0.00%)      Graph g(numOfVertex);
+3,935 ( 0.19%)  => /home/dotan/projects/semester_b/operationSystems/finalProject/question4/../question2/Graph.cpp:Graph::Graph(int) (1x)
+ 3 ( 0.00%)      srand(RandomSeed);
+6,234 ( 0.30%)  => ???:0x000000000010a510 (1x)
+22 ( 0.00%)      while(edgesAdded<numOfEdges){
+45 ( 0.00%)          int src=rand()%numOfVertex;
+531 ( 0.03%)  => ???:0x000000000010a3f0 (9x)
+27 ( 0.00%)          int dest =rand()%numOfVertex;
+531 ( 0.03%)  => ???:0x000000000010a3f0 (9x)
+ .                   try{
+36 ( 0.00%)              g.addEdge(src,dest);
+33,040 ( 1.60%)  => /home/dotan/projects/semester_b/operationSystems/finalProject/question4/../question2/Graph.cpp:Graph::addEdge(int, int) (9x)
+16 ( 0.00%)              edgesAdded++;
+ 8 ( 0.00%)          }catch(const std::exception& e){
+57 ( 0.00%)  => ???:0x000000000010a430 (1x)
+ .           
+ 3 ( 0.00%)          }
+4,059 ( 0.20%)  => ???:0x000000000010a660 (1x)
+ .               }
+ 3 ( 0.00%)      g.printGraph();
+27,096 ( 1.31%)  => /home/dotan/projects/semester_b/operationSystems/finalProject/question4/../question2/Graph.cpp:Graph::printGraph() (1x)
+ 6 ( 0.00%)      std::vector<int> resualt = g.findEuler();
+4,390 ( 0.21%)  => /home/dotan/projects/semester_b/operationSystems/finalProject/question4/../question2/Graph.cpp:Graph::findEuler() (1x)
+ 3 ( 0.00%)      if(resualt.size()!=0){
+ .                   std::cout<<"The resualt is:"<<std::endl;
+ .                   for(size_t i=0;i<resualt.size();i++){
+ .                       if(i!=resualt.size()-1){
+ .                           std::cout<<resualt[i]<<" -> ";
+ .                       }
+ .                       else{
+ .                           std::cout<<resualt[i]<<std::endl;
+ .                       }
+ .                   }
+ .               }
+19 ( 0.00%)  }
+34 ( 0.00%)  => ???:__gcov_init (1x)
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: ../question2/Graph.cpp
+--------------------------------------------------------------------------------
+Ir           
+
+  .           #include "Graph.hpp"
+  .           using namespace std;
+  .           /**
+  .            * @brief Constructor for Graph class that initializes a graph with a given number of vertices.
+  .            * @param numOfVertex The number of vertices in the graph.
+  .            * @throws std::runtime_error if numOfVertex is not positive.
+  .            */
+ 11 ( 0.00%)  Graph:: Graph(int numOfVertex){
+  3 ( 0.00%)      if(numOfVertex<=0){
+  .                   throw std::runtime_error("you must have positive number of vertex");
+  .               }
+  3 ( 0.00%)      this->numOfVertex=numOfVertex;
+  1 ( 0.00%)      neighborsMatrix.resize(numOfVertex,std::vector<bool>(numOfVertex,false));
+  7 ( 0.00%)  }
+  .           
+  .           /**
+  .            * @brief Constructor for Graph class that initializes a graph with a given number of vertices and a neighbors matrix.
+  .            * @param numOfVertex The number of vertices in the graph.
+  .            * @param neighborsMatrix A 2D vector representing the adjacency matrix of the graph.
+  .            * @throws std::runtime_error if numOfVertex is not positive, if the matrix size is not N x N, or if some vertex is connected to itself or if the graph is not undirected.
+  .            */
+  .           Graph::Graph(int numOfVertex ,const std::vector<std::vector<bool>> neighborsMatrix){
+-- line 22 ----------------------------------------
+-- line 46 ----------------------------------------
+  .           }
+  .           
+  .           /**
+  .            * @brief Adds an edge between two vertices in the graph.
+  .            * @param src The source vertex.
+  .            * @param dest The destination vertex.
+  .            * @throws std::runtime_error if src or dest is out of bounds or if they are the same vertex or they are already connected.
+  .            */
+ 45 ( 0.00%)  void Graph::addEdge(int src,int dest){
+ 72 ( 0.00%)      if(src>=numOfVertex || src<0 || dest>=numOfVertex || dest<0){
+  .                   throw std::runtime_error("src and dest must be in {0,....,n-1}");
+  .               }
+ 18 ( 0.00%)      if(src == dest){
+  .                   throw std::runtime_error("src and dest cant be the same");
+  .               }
+ 27 ( 0.00%)      if(neighborsMatrix[src][dest]){
+ 10 ( 0.00%)          throw std::runtime_error("this 2 vtx already connected");
+28,891 ( 1.40%)  => ???:0x000000000010a6a0 (1x)
+3,552 ( 0.17%)  => ???:0x000000000010a420 (1x)
+230 ( 0.01%)  => ???:0x000000000010a460 (1x)
+  .               }
+  .               neighborsMatrix[src][dest]=true;
+  .               neighborsMatrix[dest][src]=true;
+ 32 ( 0.00%)  }
+  .           
+  .           /**
+  .            * @brief Checks if the graph is connected.
+  .            * @return true if the graph is connected, false otherwise.
+  .            * This function uses a fake breadth-first search (BFS) algorithm to traverse the graph and check
+  .            * we build this function beacuse graph must be connected to have Euler cycle.
+  .            */
+ 12 ( 0.00%)  bool Graph::isConnected(){
+  3 ( 0.00%)      vector<int> distance;
+ 22 ( 0.00%)      for(int i=0;i<numOfVertex;i++){
+  .                   distance.push_back(1);
+  .               }
+  .               queue<int> bfs;
+  1 ( 0.00%)      bfs.push(0);
+ 15 ( 0.00%)      while(!bfs.empty()){
+  6 ( 0.00%)          int v=bfs.front();
+  .                   bfs.pop();
+174 ( 0.01%)          for(int i=0;i<numOfVertex;i++){
+ 74 ( 0.00%)              if(neighborsMatrix[v][i] && distance[i] == 1){
+  5 ( 0.00%)                  distance[i] =0;
+  .                           bfs.push(i);
+  .                       }
+  .                   }
+  .               }
+ 21 ( 0.00%)      for(int i=0;i<numOfVertex;i++){
+ 10 ( 0.00%)          if(distance[i]==1){
+  .                       return false;
+  .                   }
+  .               }
+  4 ( 0.00%)      return true;
+ 12 ( 0.00%)  }
+  .           
+  .           /**
+  .            * @brief Finds an Euler cycle in the graph.
+  .            * if the is a Euler cycle in the graph, it returns a vector containing the vertices in the cycle by their order.
+  .            * If the graph is not connected or if any vertex has an odd degree, it returns an empty vector.
+  .            * @return A vector of integers representing the vertices in the Euler cycle, or an empty vector if no Euler cycle exists.
+  .            */
+ 14 ( 0.00%)  vector<int> Graph::findEuler(){
+  .               int counter=0;
+  3 ( 0.00%)      vector<int> EulerCycle;
+  5 ( 0.00%)      if(!this->isConnected()){
+2,638 ( 0.13%)  => ../question2/Graph.cpp:Graph::isConnected() (1x)
+  .                   cout<<"There cant be Euler cycle in unconnected graph"<<endl;
+  .                   return EulerCycle;
+  .               }
+  6 ( 0.00%)      for(int i=0;i<numOfVertex;i++){
+  2 ( 0.00%)          counter=0;
+ 15 ( 0.00%)          for(int j=0;j<numOfVertex;j++){
+  .                       if(neighborsMatrix[i][j]){
+ 10 ( 0.00%)                  counter++;
+  .                       }
+  .                   }
+  7 ( 0.00%)          if(counter%2==1){
+  4 ( 0.00%)              cout<<"This graph is not containing Euler cycle becase vtx "<<i<<" have odd degree"<<endl;
+410 ( 0.02%)  => ???:0x000000000010a6b0 (1x)
+  .                       return EulerCycle;
+  .                   }
+  .               }
+  .               vector<vector<bool>> copyMat = neighborsMatrix;
+  .               stack<int> s;
+  .               s.push(0);
+  .               while(!s.empty()){
+  .                   int v= s.top();
+-- line 128 ----------------------------------------
+-- line 137 ----------------------------------------
+  .                       }
+  .                   }
+  .                   if(!foundEdge){
+  .                       EulerCycle.push_back(v);
+  .                       s.pop();
+  .                   }
+  .               }
+  .               return EulerCycle;
+ 12 ( 0.00%)  }
+  .           /**
+  .            * @brief this function print the neighbors of every vertex in the graph.
+  .            */
+ 12 ( 0.00%)  void Graph::printGraph(){
+ 18 ( 0.00%)     for(int i=0;i<numOfVertex;i++){
+ 20 ( 0.00%)          cout<<"neighbors of : "<<i<<std::endl;
+6,340 ( 0.31%)  => ???:0x000000000010a6b0 (5x)
+110 ( 0.01%)          for(int j=0;j<numOfVertex;j++){
+ 25 ( 0.00%)              if(neighborsMatrix[i][j]){
+ 48 ( 0.00%)                  cout<<" " <<j ;
+6,521 ( 0.32%)  => ???:0x000000000010a6b0 (16x)
+  .                       }
+  .                   }
+  .                   cout<<std::endl;
+  .              } 
+  8 ( 0.00%)  }
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /usr/include/c++/13/bits/stl_bvector.h
+--------------------------------------------------------------------------------
+Ir           
+
+-- line 92 ----------------------------------------
+  .               _Bit_reference() _GLIBCXX_NOEXCEPT : _M_p(0), _M_mask(0) { }
+  .           
+  .           #if __cplusplus >= 201103L
+  .               _Bit_reference(const _Bit_reference&) = default;
+  .           #endif
+  .           
+  .               _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .               operator bool() const _GLIBCXX_NOEXCEPT
+174 ( 0.01%)      { return !!(*_M_p & _M_mask); }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               _Bit_reference&
+  .               operator=(bool __x) _GLIBCXX_NOEXCEPT
+  .               {
+  .                 if (__x)
+224 ( 0.01%)  	*_M_p |= _M_mask;
+  .                 else
+  .           	*_M_p &= ~_M_mask;
+  .                 return *this;
+  .               }
+  .           
+  .           #if __cplusplus > 202002L
+  .               constexpr const _Bit_reference&
+  .               operator=(bool __x) const noexcept
+-- line 115 ----------------------------------------
+-- line 188 ----------------------------------------
+  .           #if __has_attribute(__assume__) && !defined(__clang__)
+  .                 unsigned int __ofst = _M_offset;
+  .                 __attribute__ ((__assume__ (__ofst < unsigned(_S_word_bit))));
+  .           #endif
+  .               }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               _Bit_iterator_base(_Bit_type * __x, unsigned int __y)
+ 22 ( 0.00%)      : _M_p(__x), _M_offset(__y) { }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               void
+  .               _M_bump_up()
+  .               {
+  .                 _M_assume_normalized();
+ 75 ( 0.00%)        if (_M_offset++ == int(_S_word_bit) - 1)
+  .           	{
+  .           	  _M_offset = 0;
+  .           	  ++_M_p;
+  .           	}
+  .               }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               void
+-- line 211 ----------------------------------------
+-- line 220 ----------------------------------------
+  .               }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               void
+  .               _M_incr(ptrdiff_t __i)
+  .               {
+  .                 _M_assume_normalized();
+  .                 difference_type __n = __i + _M_offset;
+201 ( 0.01%)        _M_p += __n / int(_S_word_bit);
+ 25 ( 0.00%)        __n = __n % int(_S_word_bit);
+ 10 ( 0.00%)        if (__n < 0)
+  .           	{
+  .           	  __n += int(_S_word_bit);
+  .           	  --_M_p;
+  .           	}
+  7 ( 0.00%)        _M_offset = static_cast<unsigned int>(__n);
+  .               }
+  .           
+  .               _GLIBCXX_NODISCARD
+  .               friend _GLIBCXX20_CONSTEXPR bool
+  .               operator==(const _Bit_iterator_base& __x, const _Bit_iterator_base& __y)
+  .               {
+  .                 __x._M_assume_normalized();
+  .                 __y._M_assume_normalized();
+-- line 243 ----------------------------------------
+-- line 288 ----------------------------------------
+  .               { return !(__x < __y); }
+  .           #endif // three-way comparison
+  .           
+  .               friend _GLIBCXX20_CONSTEXPR ptrdiff_t
+  .               operator-(const _Bit_iterator_base& __x, const _Bit_iterator_base& __y)
+  .               {
+  .                 __x._M_assume_normalized();
+  .                 __y._M_assume_normalized();
+ 10 ( 0.00%)        return (int(_S_word_bit) * (__x._M_p - __y._M_p)
+ 10 ( 0.00%)  	      + __x._M_offset - __y._M_offset);
+  .               }
+  .             };
+  .           #pragma GCC diagnostic pop
+  .           
+  .             struct _Bit_iterator : public _Bit_iterator_base
+  .             {
+  .               typedef _Bit_reference  reference;
+  .           #if __cplusplus > 201703L
+-- line 305 ----------------------------------------
+-- line 321 ----------------------------------------
+  .               _M_const_cast() const
+  .               { return *this; }
+  .           
+  .               _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .               reference
+  .               operator*() const
+  .               {
+  .                 _M_assume_normalized();
+256 ( 0.01%)        return reference(_M_p, 1UL << _M_offset);
+  .               }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               iterator&
+  .               operator++()
+  .               {
+  .                 _M_bump_up();
+  .                 return *this;
+-- line 337 ----------------------------------------
+-- line 385 ----------------------------------------
+  .               { return *(*this + __i); }
+  .           
+  .               _GLIBCXX_NODISCARD
+  .               friend _GLIBCXX20_CONSTEXPR iterator
+  .               operator+(const iterator& __x, difference_type __n)
+  .               {
+  .                 iterator __tmp = __x;
+  .                 __tmp += __n;
+  5 ( 0.00%)        return __tmp;
+  .               }
+  .           
+  .               _GLIBCXX_NODISCARD
+  .               friend _GLIBCXX20_CONSTEXPR iterator
+  .               operator+(difference_type __n, const iterator& __x)
+  .               { return __x + __n; }
+  .           
+  .               _GLIBCXX_NODISCARD
+-- line 401 ----------------------------------------
+-- line 423 ----------------------------------------
+  .               _Bit_const_iterator() : _Bit_iterator_base(0, 0) { }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               _Bit_const_iterator(_Bit_type * __x, unsigned int __y)
+  .               : _Bit_iterator_base(__x, __y) { }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               _Bit_const_iterator(const _Bit_iterator& __x)
+  5 ( 0.00%)      : _Bit_iterator_base(__x._M_p, __x._M_offset) { }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               _Bit_iterator
+  .               _M_const_cast() const
+  .               { return _Bit_iterator(_M_p, _M_offset); }
+  .           
+  .               _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .               const_reference
+  .               operator*() const
+  .               {
+  .                 _M_assume_normalized();
+ 55 ( 0.00%)        return _Bit_reference(_M_p, 1UL << _M_offset);
+  .               }
+  .           
+  .               _GLIBCXX20_CONSTEXPR
+  .               const_iterator&
+  .               operator++()
+  .               {
+  .                 _M_bump_up();
+  .                 return *this;
+-- line 451 ----------------------------------------
+-- line 543 ----------------------------------------
+  .           	  _GLIBCXX20_CONSTEXPR
+  .           	  void operator=(_Bit_iterator __it) { _M_p = __it._M_p; }
+  .           	} _M_start;
+  .           #endif
+  .           	_Bit_iterator	_M_finish;
+  .           	_Bit_pointer	_M_end_of_storage;
+  .           
+  .           	_GLIBCXX20_CONSTEXPR
+  2 ( 0.00%)  	_Bvector_impl_data() _GLIBCXX_NOEXCEPT
+  6 ( 0.00%)  	: _M_start(), _M_finish(), _M_end_of_storage()
+  .           	{ }
+  .           
+  .           #if __cplusplus >= 201103L
+  .           	_Bvector_impl_data(const _Bvector_impl_data&) = default;
+  .           
+  .           	_Bvector_impl_data&
+  .           	operator=(const _Bvector_impl_data&) = default;
+  .           
+-- line 560 ----------------------------------------
+-- line 615 ----------------------------------------
+  .           	_GLIBCXX20_CONSTEXPR
+  .           	_Bvector_impl(_Bit_alloc_type&& __a, _Bvector_impl&& __x) noexcept
+  .           	: _Bit_alloc_type(std::move(__a)), _Bvector_impl_data(std::move(__x))
+  .           	{ }
+  .           #endif
+  .           
+  .           	_GLIBCXX20_CONSTEXPR
+  .           	_Bit_type*
+  5 ( 0.00%)  	_M_end_addr() const _GLIBCXX_NOEXCEPT
+  .           	{
+  .           	  if (this->_M_end_of_storage)
+  .           	    return std::__addressof(this->_M_end_of_storage[-1]) + 1;
+  .           	  return 0;
+  .           	}
+  .                 };
+  .           
+  .               public:
+-- line 631 ----------------------------------------
+-- line 687 ----------------------------------------
+  .           #endif
+  .           	return __p;
+  .                 }
+  .           
+  .                 _GLIBCXX20_CONSTEXPR
+  .                 void
+  .                 _M_deallocate()
+  .                 {
+ 15 ( 0.00%)  	if (_M_impl._M_start._M_p)
+  .           	  {
+ 15 ( 0.00%)  	    const size_t __n = _M_impl._M_end_addr() - _M_impl._M_start._M_p;
+  .           	    _Bit_alloc_traits::deallocate(_M_impl,
+  .           					  _M_impl._M_end_of_storage - __n,
+  .           					  __n);
+  .           	    _M_impl._M_reset();
+  .           	  }
+  .                 }
+  .           
+  .           #if __cplusplus >= 201103L
+-- line 705 ----------------------------------------
+-- line 707 ----------------------------------------
+  .                 void
+  .                 _M_move_data(_Bvector_base&& __x) noexcept
+  .                 { _M_impl._M_move_data(std::move(__x._M_impl)); }
+  .           #endif
+  .           
+  .                 _GLIBCXX_CONSTEXPR
+  .                 static size_t
+  .                 _S_nword(size_t __n)
+ 22 ( 0.00%)        { return (__n + int(_S_word_bit) - 1) / int(_S_word_bit); }
+  .               };
+  .           
+  .             /**
+  .              *  @brief  A specialization of vector for booleans which offers fixed time
+  .              *  access to individual elements in any order.
+  .              *
+  .              *  @ingroup sequences
+  .              *  @headerfile vector
+-- line 723 ----------------------------------------
+-- line 801 ----------------------------------------
+  .           #endif
+  .                 : _Base(__a)
+  .                 {
+  .           	_M_initialize(__n);
+  .           	_M_initialize_value(__value);
+  .                 }
+  .           
+  .                 _GLIBCXX20_CONSTEXPR
+ 40 ( 0.00%)        vector(const vector& __x)
+  .                 : _Base(_Bit_alloc_traits::_S_select_on_copy(__x._M_get_Bit_allocator()))
+  .                 {
+  .           	const_iterator __xbegin = __x.begin(), __xend = __x.end();
+  .           	_M_initialize(__x.size());
+  .           	_M_copy_aligned(__xbegin, __xend, begin());
+ 40 ( 0.00%)        }
+  .           
+  .           #if __cplusplus >= 201103L
+  .                 vector(vector&&) = default;
+  .           
+  .               private:
+  .                 _GLIBCXX20_CONSTEXPR
+  .                 vector(vector&& __x, const allocator_type& __a, true_type) noexcept
+  .                 : _Base(std::move(__x), __a)
+-- line 823 ----------------------------------------
+-- line 988 ----------------------------------------
+  .                 void
+  .                 assign(initializer_list<bool> __l)
+  .                 { _M_assign_aux(__l.begin(), __l.end(), random_access_iterator_tag()); }
+  .           #endif
+  .           
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 iterator
+  .                 begin() _GLIBCXX_NOEXCEPT
+ 79 ( 0.00%)        { return iterator(this->_M_impl._M_start._M_p, 0); }
+  .           
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 const_iterator
+  .                 begin() const _GLIBCXX_NOEXCEPT
+  5 ( 0.00%)        { return const_iterator(this->_M_impl._M_start._M_p, 0); }
+  .           
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 iterator
+  .                 end() _GLIBCXX_NOEXCEPT
+  .                 { return this->_M_impl._M_finish; }
+  .           
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 const_iterator
+-- line 1009 ----------------------------------------
+-- line 1079 ----------------------------------------
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 bool
+  .                 empty() const _GLIBCXX_NOEXCEPT
+  .                 { return begin() == end(); }
+  .           
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 reference
+  .                 operator[](size_type __n)
+  9 ( 0.00%)        { return begin()[__n]; }
+  .           
+  .                 _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+  .                 const_reference
+  .                 operator[](size_type __n) const
+  .                 { return begin()[__n]; }
+  .           
+  .               protected:
+  .                 _GLIBCXX20_CONSTEXPR
+-- line 1095 ----------------------------------------
+-- line 1343 ----------------------------------------
+  .           	return std::copy(const_iterator(__last._M_p, 0), __last,
+  .           			 iterator(__q, 0));
+  .                 }
+  .           
+  .                 _GLIBCXX20_CONSTEXPR
+  .                 void
+  .                 _M_initialize(size_type __n)
+  .                 {
+ 10 ( 0.00%)  	if (__n)
+  .           	  {
+  .           	    _Bit_pointer __q = this->_M_allocate(__n);
+ 17 ( 0.00%)  	    this->_M_impl._M_end_of_storage = __q + _S_nword(__n);
+  .           	    iterator __start = iterator(std::__addressof(*__q), 0);
+ 12 ( 0.00%)  	    this->_M_impl._M_start = __start;
+ 12 ( 0.00%)  	    this->_M_impl._M_finish = __start + difference_type(__n);
+  .           	  }
+  .                 }
+  .           
+  .                 _GLIBCXX20_CONSTEXPR
+  .                 void
+  .                 _M_initialize_value(bool __x) _GLIBCXX_NOEXCEPT
+  .                 {
+  .           	if (_Bit_type* __p = this->_M_impl._M_start._M_p)
+-- line 1365 ----------------------------------------
+-- line 1589 ----------------------------------------
+  .           #if __cpp_lib_is_constant_evaluated
+  .               if (std::is_constant_evaluated())
+  .               {
+  .                 for (size_t __i = 0; __i < __n; ++__i)
+  .           	__p[__i] = __x ? ~0ul : 0ul;
+  .                 return;
+  .               }
+  .           #endif
+  4 ( 0.00%)      __builtin_memset(__p, __x ? ~0 : 0, __n * sizeof(_Bit_type));
+ 15 ( 0.00%)  => ???:0x000000000010a480 (1x)
+  .             }
+  .           
+  .           
+  .             _GLIBCXX20_CONSTEXPR
+  .             inline void
+  .             __fill_a1(_GLIBCXX_STD_C::_Bit_iterator __first,
+  .           	    _GLIBCXX_STD_C::_Bit_iterator __last, const bool& __x)
+  .             {
+-- line 1605 ----------------------------------------
+
+--------------------------------------------------------------------------------
+The following files chosen for auto-annotation could not be found:
+--------------------------------------------------------------------------------
+  ./elf/../bits/stdlib-bsearch.h
+  ./elf/../elf/dl-tls.c
+  ./elf/../sysdeps/generic/dl-new-hash.h
+  ./elf/../sysdeps/generic/dl-protected.h
+  ./elf/../sysdeps/generic/ldsodefs.h
+  ./elf/../sysdeps/nptl/dl-tls_init_tp.c
+  ./elf/../sysdeps/unix/sysv/linux/dl-sysdep.c
+  ./elf/../sysdeps/x86/dl-cacheinfo.h
+  ./elf/../sysdeps/x86_64/dl-machine.h
+  ./elf/../sysdeps/x86_64/dl-trampoline.h
+  ./elf/./dl-find_object.h
+  ./elf/./dl-map-segments.h
+  ./elf/./elf/dl-cache.c
+  ./elf/./elf/dl-call_fini.c
+  ./elf/./elf/dl-catch.c
+  ./elf/./elf/dl-deps.c
+  ./elf/./elf/dl-environ.c
+  ./elf/./elf/dl-find_object.c
+  ./elf/./elf/dl-fini.c
+  ./elf/./elf/dl-hwcaps.c
+  ./elf/./elf/dl-hwcaps_split.c
+  ./elf/./elf/dl-init.c
+  ./elf/./elf/dl-load.c
+  ./elf/./elf/dl-lookup-direct.c
+  ./elf/./elf/dl-lookup.c
+  ./elf/./elf/dl-minimal-malloc.c
+  ./elf/./elf/dl-minimal.c
+  ./elf/./elf/dl-misc.c
+  ./elf/./elf/dl-object.c
+  ./elf/./elf/dl-reloc.c
+  ./elf/./elf/dl-runtime.c
+  ./elf/./elf/dl-sort-maps.c
+  ./elf/./elf/dl-tunables.c
+  ./elf/./elf/dl-tunables.h
+  ./elf/./elf/dl-version.c
+  ./elf/./elf/do-rel.h
+  ./elf/./elf/get-dynamic-info.h
+  ./elf/./elf/libc-dl-profstub.c
+  ./elf/./elf/rtld.c
+  ./elf/./get-dynamic-info.h
+  ./iconv/./iconv/gconv_simple.c
+  ./io/../sysdeps/unix/sysv/linux/open64_nocancel.c
+  ./libio/../string/bits/string_fortified.h
+  ./libio/./libio/fileops.c
+  ./libio/./libio/genops.c
+  ./libio/./libio/iofflush.c
+  ./libio/./libio/iofread.c
+  ./libio/./libio/iofwrite.c
+  ./libio/./libio/libioP.h
+  ./libio/./libio/putc.c
+  ./malloc/./malloc/malloc.c
+  ./misc/../sysdeps/unix/sysv/linux/mmap64.c
+  ./posix/./posix/getopt.c
+  ./setjmp/../sysdeps/x86_64/setjmp.S
+  ./stdlib/../stdlib/strtol_l.c
+  ./stdlib/./stdlib/cxa_atexit.c
+  ./stdlib/./stdlib/cxa_finalize.c
+  ./stdlib/./stdlib/exit.c
+  ./stdlib/./stdlib/getenv.c
+  ./stdlib/./stdlib/random.c
+  ./stdlib/./stdlib/random_r.c
+  ./string/../string/strcspn.c
+  ./string/../sysdeps/x86_64/multiarch/../multiarch/memset-vec-unaligned-erms.S
+  ./string/../sysdeps/x86_64/multiarch/../multiarch/strchr-sse2.S
+  ./string/../sysdeps/x86_64/multiarch/../multiarch/strcmp-sse2.S
+  ./string/../sysdeps/x86_64/multiarch/../multiarch/strlen-sse2.S
+  ./string/../sysdeps/x86_64/multiarch/memcmp-avx2-movbe.S
+  ./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S
+  ./string/../sysdeps/x86_64/multiarch/strcmp-avx2.S
+  ./string/../sysdeps/x86_64/multiarch/strlen-avx2.S
+  ./wcsmbs/./wcsmbs/btowc.c
+  ./wcsmbs/./wcsmbs/wctob.c
+  ./wcsmbs/./wcsmbsload.h
+  ./wctype/./wctype/wctype_l.c
+
+--------------------------------------------------------------------------------
+Ir             
+--------------------------------------------------------------------------------
+2,553 ( 0.12%)  events annotated
+
