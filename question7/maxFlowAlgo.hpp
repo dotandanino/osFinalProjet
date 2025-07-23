@@ -1,10 +1,11 @@
-#ifndef SCC_ALGORITHM
-#define SCC_ALGORITHM
+#ifndef MAXFLOW_ALGORITHM
+#define MAXFLOW_ALGORITHM
 #include "GraphAlgorithm.hpp"
+#include <climits>
+#include <queue>
 #include <vector>
-#include <stack>
-#include <sstream>
-class SCCAlgo :public GraphAlgorithm{
+
+class maxFlowAlgo :public GraphAlgorithm{
     public:
         virtual std::string execute(const Graph& g) const override;
 };

@@ -4,7 +4,7 @@
 
 class GraphAlgorithm{
     public:
-        virtual std::string execute(const Graph& g) = 0;
+        virtual std::string execute(const Graph& g) const = 0;
         virtual ~GraphAlgorithm()=default;
 };
 
