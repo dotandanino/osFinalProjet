@@ -70,9 +70,6 @@ std::string PathCoverAlgo::execute(const Graph& g) const {
             matchedU[matchTo[v]] = true;
         }
     }
-    for(int u = 0; u < n; ++u) {
-        cout<< "u: " << u << " matched to v: " << matchTo[u] << endl;
-    }
     //Step 4: searching for paths
     vector<vector<int>> paths;
     for (int u = 0; u < n; ++u) {
@@ -80,12 +77,10 @@ std::string PathCoverAlgo::execute(const Graph& g) const {
             vector<int> path;
             int current = u;
             path.push_back(current);
-            cout<<"AAAA"<<endl;
             // building the path
             while (true) {
                 // find the v that corresponds to current
                 int nextV = -1;
-                cout<< current <<endl;
                 for (int v =0 ; v< n; ++v) {
                     if (matchTo[current] == v) {
                         nextV = v;
