@@ -20,10 +20,6 @@ using namespace std;
 std::mutex mtx; // Mutex for thread safety
 std::condition_variable cv;
 
-struct toqueue {
-    int fd;
-    Graph g;
-};
 
 std::queue<int> q; // Queue to hold file descriptors
 
