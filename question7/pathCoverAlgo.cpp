@@ -4,7 +4,7 @@ enum State { UNVISITED, VISITING, VISITED };
 
 bool dfs(int node, const vector<vector<int>>& graph, vector<State>& state) {
     state[node] = VISITING;
-    for (int i=0; i < graph[node].size(); ++i) {
+    for (int i=0; i <(int) graph[node].size(); ++i) {
         if(graph[node][i] < 0) continue; // skip if no edge
         if (state[i] == VISITING) {//if we comeback to the same vtx we have cycle
             return true;
@@ -87,7 +87,6 @@ std::string PathCoverAlgo::execute(const Graph& g) const {
                         break;
                     }
                 }
-                cout<< nextV <<endl;
                 if (nextV == -1) break;// no more edges from current to any v_in
                 
                 //move to the next vertex in the path

@@ -42,8 +42,7 @@ std::unique_ptr<GraphAlgorithm> algo4 = createAlgorithm(static_cast<AlgorithmTyp
 Graph createRandomGraph(int numOfVertex, int numOfEdges, int RandomSeed,int minWeight, int maxWeight) {
     unsigned long maxEdge = (numOfVertex -1)*numOfVertex;
     if((unsigned long)numOfEdges>maxEdge){
-        // std::cerr<<"E"<<numOfEdges<<" maxEdge "<<maxEdge<<std::endl; 
-        // std::cerr<<"ypu enter too many edges"<<std::endl;
+        throw std::runtime_error("You entered too many edges");
         exit(1);
     }
     int edgesAdded=0;

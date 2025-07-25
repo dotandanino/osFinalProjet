@@ -63,7 +63,6 @@ std::string SCCAlgo::execute(const Graph& g) const{
     int n = g.getNumOfVertex();
     std::vector<bool> visited(n, false);
     std::stack<int> finished;
-    std::cout<<"starting step 1"<<std::endl;
     // Step 1: Perform DFS on the original graph and fill the stack with vertices in finishing order
     for (int i = 0; i < n; ++i) {
         if (!visited[i]) {

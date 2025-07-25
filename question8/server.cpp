@@ -12,6 +12,7 @@
 #include <vector>
 #include <queue>
 #include <condition_variable>
+#include <algorithm>
 
 #define PORT 8080
 #define BUFFERSIZE 4096
@@ -19,7 +20,9 @@ using namespace std;
 #define N 5
 std::mutex mtx; // Mutex for thread safety
 std::condition_variable cv;
-
+int fd_count = 2;
+// a vector to hold the file descriptors for polling
+vector<pollfd> fds(fd_count);
 
 std::queue<int> q; // Queue to hold file descriptors
 
@@ -28,6 +31,7 @@ std::unique_ptr<GraphAlgorithm> algo2 = createAlgorithm(static_cast<AlgorithmTyp
 std::unique_ptr<GraphAlgorithm> algo3 = createAlgorithm(static_cast<AlgorithmType>(3));
 std::unique_ptr<GraphAlgorithm> algo4 = createAlgorithm(static_cast<AlgorithmType>(4));
 
+bool server_running = true; // Flag to control server running state
 
 Graph createRandomGraph(int numOfVertex, int numOfEdges, int RandomSeed,int minWeight, int maxWeight) {
     unsigned long maxEdge = (numOfVertex -1)*numOfVertex;
@@ -55,13 +59,20 @@ Graph createRandomGraph(int numOfVertex, int numOfEdges, int RandomSeed,int minW
 }
 
 void clientHandle(){
-    while(true) {
+    while(server_running) {
         int fd = -1;
         {
             std::unique_lock<std::mutex> lock(mtx);
-            cv.wait(lock, []{ return !q.empty(); }); // מחכה עד שיש משהו בתור
-            fd = q.front();
-            q.pop();
+            cv.wait(lock, []{ return !q.empty() || !server_running; });
+            cout << "finished wait"<<endl;
+            if(!q.empty()) {
+                fd = q.front();
+                q.pop();
+            }
+        }
+        if(!server_running && fd == -1) {
+            cout << "Server is not running and no file descriptor is available." << endl;
+            break; // Exit if server is not running and no file descriptor is available
         }
         if (fd == -1) {
             continue;
@@ -71,6 +82,10 @@ void clientHandle(){
         if(byteRecv==0){
             cout << "Client disconnected." << endl;
             close(fd);
+            auto it = std::remove_if(fds.begin(), fds.end(), [fd](const pollfd& p) {
+                return p.fd == fd;
+            });
+            fds.erase(it, fds.end());
             break;
         }
         int n=buffer[0];
@@ -158,12 +173,10 @@ int main(){
         perror("listen failed");
         exit(EXIT_FAILURE);
     }
-    int fd_count = 1;
-    int fd_capacity = 1;
-    // a vector to hold the file descriptors for polling
-    vector<pollfd> fds(fd_capacity);
     fds[0].fd = server_fd;
     fds[0].events = POLLIN;
+    fds[1].fd = STDIN_FILENO; // Add stdin to the poll list
+    fds[1].events = POLLIN;
 
     int buffer[BUFFERSIZE / sizeof(int)];
     for(;;){
@@ -178,6 +191,30 @@ int main(){
                     int new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
                     fds.push_back({new_socket, POLLIN});
                     fd_count++;
+                }else if(fds[i].fd == STDIN_FILENO){
+                    // Handle input from stdin
+                    string input;
+                    getline(cin, input);
+                    cout<<"input is "<<input<<endl;
+                    if(input == "exit") {
+                        server_running = false;
+                        for(int j=2; j<fd_count; j++) {
+                            close(fds[j].fd); // Close all client sockets
+                        }
+                        close(server_fd); // Close the server socket
+                        server_running = false; // Set the server running flag to false
+                        cv.notify_all(); // Notify all waiting threads to exit
+                        cout<<"Server shutting down..."<<endl;
+                        for(int i=0;i<4;i++){
+                            threads[i].join(); // Wait for all threads to finish
+                        }
+                        for(int i=0;i<fd_count;i++){
+                            if(fds[i].fd != -1) {
+                                close(fds[i].fd); // Close all file descriptors
+                            }
+                        }
+                        exit(0);
+                    }
                 }
                 else{
                     {
