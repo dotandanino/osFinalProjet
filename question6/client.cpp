@@ -54,10 +54,8 @@ int main(){
         }
         cout<<"now you will need to enter the neighbor matrix if you want to stop enter 0 for both src and dest"<<endl;
         for(;;){
-            cout<<"enter src "<<endl;
-            cin>>src;
-            cout<<"enter dst"<<endl;
-            cin>>dest;
+            cout<<"enter src dest"<<endl;
+            cin>>src>>dest;
             if(dest==src && dest==0){
                 break;
             }
@@ -70,6 +68,4 @@ int main(){
         }
         send(sock, &arr,(n*n + 1)*sizeof(int), 0);
     }
-
-
 }

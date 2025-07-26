@@ -1,0 +1,164 @@
+        -:    0:Source:Graph.cpp
+        -:    0:Graph:Graph.gcno
+        -:    0:Data:Graph.gcda
+        -:    0:Runs:9
+        -:    1:#include "../question2/Graph.hpp"
+        -:    2:using namespace std;
+        -:    3:/**
+        -:    4: * @brief Constructor for Graph class that initializes a graph with a given number of vertices.
+        -:    5: * @param numOfVertex The number of vertices in the graph.
+        -:    6: * @throws std::runtime_error if numOfVertex is not positive.
+        -:    7: */
+        5:    8:Graph:: Graph(int numOfVertex){
+        5:    9:    if(numOfVertex<=0){
+    #####:   10:        throw std::runtime_error("you must have positive number of vertex");
+        -:   11:    }
+        5:   12:    this->numOfVertex=numOfVertex;
+       10:   13:    neighborsMatrix.resize(numOfVertex,std::vector<bool>(numOfVertex,false));
+        5:   14:}
+        -:   15:
+        -:   16:/**
+        -:   17: * @brief Constructor for Graph class that initializes a graph with a given number of vertices and a neighbors matrix.
+        -:   18: * @param numOfVertex The number of vertices in the graph.
+        -:   19: * @param neighborsMatrix A 2D vector representing the adjacency matrix of the graph.
+        -:   20: * @throws std::runtime_error if numOfVertex is not positive, if the matrix size is not N x N, or if some vertex is connected to itself or if the graph is not undirected.
+        -:   21: */
+    #####:   22:Graph::Graph(int numOfVertex ,const std::vector<std::vector<bool>> neighborsMatrix){
+    #####:   23:     if(numOfVertex<=0){
+    #####:   24:        throw std::runtime_error("you must have positive number of vertex");
+        -:   25:    }
+    #####:   26:    this->numOfVertex=numOfVertex;
+    #####:   27:    if((int)neighborsMatrix.size()!=numOfVertex){
+    #####:   28:        throw std::runtime_error("matrix size must be N x N");
+        -:   29:    }
+    #####:   30:    for(int i=0;i<numOfVertex;i++){
+    #####:   31:        if((int)neighborsMatrix[i].size()!=numOfVertex){
+    #####:   32:            throw std::runtime_error("matrix size must be N x N");
+        -:   33:        }
+        -:   34:    }
+    #####:   35:    for(int i=0;i<numOfVertex;i++){
+    #####:   36:        if(neighborsMatrix[i][i]){
+    #####:   37:            throw std::runtime_error("vtx cant be connected to himself");
+        -:   38:        }
+    #####:   39:        for(int j=0;j<i;j++){
+    #####:   40:            if(neighborsMatrix[i][j]!=neighborsMatrix[j][i]){
+    #####:   41:                throw std::runtime_error("the graph must be undirected");
+        -:   42:            }
+        -:   43:        }
+        -:   44:    }
+    #####:   45:    this->neighborsMatrix = neighborsMatrix;
+    #####:   46:}
+        -:   47:
+        -:   48:/**
+        -:   49: * @brief Adds an edge between two vertices in the graph.
+        -:   50: * @param src The source vertex.
+        -:   51: * @param dest The destination vertex.
+        -:   52: * @throws std::runtime_error if src or dest is out of bounds or if they are the same vertex or they are already connected.
+        -:   53: */
+      134:   54:void Graph::addEdge(int src,int dest){
+      134:   55:    if(src>=numOfVertex || src<0 || dest>=numOfVertex || dest<0){
+    #####:   56:        throw std::runtime_error("src and dest must be in {0,....,n-1}");
+        -:   57:    }
+      134:   58:    if(src == dest){
+       14:   59:        throw std::runtime_error("src and dest cant be the same");
+        -:   60:    }
+      120:   61:    if(neighborsMatrix[src][dest]){
+       82:   62:        throw std::runtime_error("this 2 vtx already connected");
+        -:   63:    }
+       38:   64:    neighborsMatrix[src][dest]=true;
+       38:   65:    neighborsMatrix[dest][src]=true;
+       38:   66:}
+        -:   67:
+        -:   68:/**
+        -:   69: * @brief Checks if the graph is connected.
+        -:   70: * @return true if the graph is connected, false otherwise.
+        -:   71: * This function uses a fake breadth-first search (BFS) algorithm to traverse the graph and check
+        -:   72: * we build this function beacuse graph must be connected to have Euler cycle.
+        -:   73: */
+        5:   74:bool Graph::isConnected(){
+        5:   75:    vector<int> distance;
+       30:   76:    for(int i=0;i<numOfVertex;i++){
+       25:   77:        distance.push_back(1);
+        -:   78:    }
+        5:   79:    queue<int> bfs;
+        5:   80:    bfs.push(0);
+       33:   81:    while(!bfs.empty()){
+       28:   82:        int v=bfs.front();
+       28:   83:        bfs.pop();
+      168:   84:        for(int i=0;i<numOfVertex;i++){
+      140:   85:            if(neighborsMatrix[v][i] && distance[i] == 1){
+       23:   86:                distance[i] =0;
+       23:   87:                bfs.push(i);
+        -:   88:            }
+        -:   89:        }
+        -:   90:    }
+       26:   91:    for(int i=0;i<numOfVertex;i++){
+       22:   92:        if(distance[i]==1){
+        1:   93:            return false;
+        -:   94:        }
+        -:   95:    }
+        4:   96:    return true;
+        5:   97:}
+        -:   98:
+        -:   99:/**
+        -:  100: * @brief Finds an Euler cycle in the graph.
+        -:  101: * if the is a Euler cycle in the graph, it returns a vector containing the vertices in the cycle by their order.
+        -:  102: * If the graph is not connected or if any vertex has an odd degree, it returns an empty vector.
+        -:  103: * @return A vector of integers representing the vertices in the Euler cycle, or an empty vector if no Euler cycle exists.
+        -:  104: */
+        5:  105:vector<int> Graph::findEuler(){
+        5:  106:    int counter=0;
+        5:  107:    vector<int> EulerCycle;
+        5:  108:    if(!this->isConnected()){
+        1:  109:        cout<<"There cant be Euler cycle in unconnected graph"<<endl;
+        1:  110:        return EulerCycle;
+        -:  111:    }
+       14:  112:    for(int i=0;i<numOfVertex;i++){
+       12:  113:        counter=0;
+       72:  114:        for(int j=0;j<numOfVertex;j++){
+       60:  115:            if(neighborsMatrix[i][j]){
+       46:  116:                counter++;
+        -:  117:            }
+        -:  118:        }
+       12:  119:        if(counter%2==1){
+        2:  120:            cout<<"This graph is not containing Euler cycle becase vtx "<<i<<" have odd degree"<<endl;
+        2:  121:            return EulerCycle;
+        -:  122:        }
+        -:  123:    }
+        2:  124:    vector<vector<bool>> copyMat = neighborsMatrix;
+        2:  125:    stack<int> s;
+        2:  126:    s.push(0);
+       44:  127:    while(!s.empty()){
+       42:  128:        int v= s.top();
+       42:  129:        bool foundEdge = false;
+      192:  130:        for(int i=0;i<numOfVertex;i++){
+      170:  131:            if(copyMat[v][i]){
+       20:  132:                foundEdge=true;
+       20:  133:                copyMat[v][i]=false;
+       20:  134:                copyMat[i][v]=false;
+       20:  135:                s.push(i);
+       20:  136:                break;
+        -:  137:            }
+        -:  138:        }
+       42:  139:        if(!foundEdge){
+       22:  140:            EulerCycle.push_back(v);
+       22:  141:            s.pop();
+        -:  142:        }
+        -:  143:    }
+        2:  144:    return EulerCycle;
+        2:  145:}
+        -:  146:
+        -:  147:/**
+        -:  148: * @brief this function print the neighbors of every vertex in the graph.
+        -:  149: */
+        5:  150:void Graph::printGraph(){
+       30:  151:   for(int i=0;i<numOfVertex;i++){
+       25:  152:        cout<<"neighbors of : "<<i<<std::endl;
+      150:  153:        for(int j=0;j<numOfVertex;j++){
+      125:  154:            if(neighborsMatrix[i][j]){
+       76:  155:                cout<<" " <<j ;
+        -:  156:            }
+        -:  157:        }
+       25:  158:        cout<<std::endl;
+        -:  159:   } 
+        5:  160:}

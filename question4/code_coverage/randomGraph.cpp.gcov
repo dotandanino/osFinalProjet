@@ -1,0 +1,64 @@
+        -:    0:Source:../question3/randomGraph.cpp
+        -:    0:Graph:randomGraph.gcno
+        -:    0:Data:randomGraph.gcda
+        -:    0:Runs:9
+        -:    1:#include "../question2/Graph.hpp"
+        -:    2:#include <iostream>
+        -:    3:#include <unistd.h>
+        -:    4:
+        -:    5:extern char* optarg;
+        -:    6:
+        9:    7:int main(int argc, char* argv[]) {
+        -:    8:    if( argc != 4){
+        -:    9:    }
+        -:   10:    int opt;
+        9:   11:    int numOfVertex=-1;
+        9:   12:    int numOfEdges=-1;
+        9:   13:    int RandomSeed = -1;
+       34:   14:    while ((opt = getopt(argc, argv, "v:e:r:")) != -1){
+       25:   15:        if(opt == 'v'){
+        9:   16:            numOfVertex=atoi(optarg);
+        -:   17:        }
+       16:   18:        else if(opt == 'e'){
+        9:   19:            numOfEdges = atoi(optarg);;
+        7:   20:        }else if(opt == 'r'){
+        7:   21:            RandomSeed = atoi(optarg);;
+        -:   22:        }
+        -:   23:    }
+        9:   24:    if(numOfEdges==-1 || numOfVertex==-1 || RandomSeed==-1){
+        2:   25:        std::cerr<<"Usage: ./"<<argv[0]<<" -v numOfVertex (int) -e numOfEdge(int) -r Randomseed(int)"<<std::endl;
+        2:   26:        exit(1);
+        -:   27:    }
+        7:   28:    unsigned long maxEdge = (numOfVertex -1)*numOfVertex/2;
+        7:   29:    if((unsigned long)numOfEdges>maxEdge){
+        2:   30:        std::cerr<<"E"<<numOfEdges<<" maxEdge "<<maxEdge<<std::endl; 
+        2:   31:        std::cerr<<"ypu enter too many edges"<<std::endl;
+        2:   32:        exit(1);
+        -:   33:    }
+        5:   34:    int edgesAdded=0;
+        5:   35:    Graph g(numOfVertex);
+        5:   36:    srand(RandomSeed);
+      139:   37:    while(edgesAdded<numOfEdges){
+      134:   38:        int src=rand()%numOfVertex;
+      134:   39:        int dest =rand()%numOfVertex;
+        -:   40:        try{
+      134:   41:            g.addEdge(src,dest);
+       38:   42:            edgesAdded++;
+       96:   43:        }catch(const std::exception& e){
+        -:   44:
+       96:   45:        }
+        -:   46:    }
+        5:   47:    g.printGraph();
+        5:   48:    std::vector<int> resualt = g.findEuler();
+        5:   49:    if(resualt.size()!=0){
+        2:   50:        std::cout<<"The resualt is:"<<std::endl;
+       24:   51:        for(size_t i=0;i<resualt.size();i++){
+       22:   52:            if(i!=resualt.size()-1){
+       20:   53:                std::cout<<resualt[i]<<" -> ";
+        -:   54:            }
+        -:   55:            else{
+        2:   56:                std::cout<<resualt[i]<<std::endl;
+        -:   57:            }
+        -:   58:        }
+        -:   59:    }
+        5:   60:}
