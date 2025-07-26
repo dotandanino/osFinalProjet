@@ -66,6 +66,5 @@ std::string maxFlowAlgo::execute(const Graph& g) const {
 
         maxFlow += pathFlow;
     }
-
-    return std::to_string(maxFlow);
+    return "max flow is: " + std::to_string(maxFlow);
 }

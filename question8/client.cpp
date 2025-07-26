@@ -55,7 +55,7 @@ int main(){
             cout<<"n must be positive number"<<endl;
             continue;
         }else{
-           int arr[n*n+1];//n*n for the neighbor matrix and extra place for the size
+           int* arr = new int[n*n+1];//n*n for the neighbor matrix and extra place for the size
             arr[0]=n;
             for(int i=1;i<n*n+1;i++){
                 arr[i]=-1; // initialize the matrix with -1
@@ -77,8 +77,9 @@ int main(){
                 cin>>w;
                 arr[src*n+dest+1]=w;//src*n + dest to change from matrix to arr +1 is because of the size
             }
-            send(sock, &arr,(n*n + 1)*sizeof(int), 0);
-            cout << "Graph sent to server." << endl;  
+            send(sock, arr,(n*n + 1)*sizeof(int), 0);
+            cout << "Graph sent to server." << endl;
+            delete[] arr; // Free the allocated memory
         }
         char buffer[4096] = {0};
         int bytesReceived = recv(sock, buffer, sizeof(buffer), 0);

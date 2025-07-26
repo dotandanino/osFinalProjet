@@ -47,24 +47,22 @@ int main(){
             cout<<"n must be positive number"<<endl;
             continue;
         }
-        int arr[n*n+2];//n*n for the neighbor matrix and extra place for the size and the algorithm type
+        int* arr=new int[n*n+2];//n*n for the neighbor matrix and extra place for the size and the algorithm type
         arr[0]=n;
         for(int i=1;i<n*n+1;i++){
             arr[i]=-1; // initialize the matrix with -1
         }
         cout<<"now you will need to enter the neighbor matrix if you want to stop enter 0 for both src and dest"<<endl;
         for(;;){
-            cout<<"enter src dest"<<endl;
-            cin>>src>>dest;
+            cout<<"enter src dest weight"<<endl;
+            cin>>src>>dest>>w;
             if(dest==src && dest==0){
                 break;
             }
-            if(dest<0 || dest>=n || src<0 || src>=n || src==dest){
-                cout<<"illegal arguments src,dest should different numbers be between 0 to n-1"<<endl;
+            if(dest<0 || dest>=n || src<0 || src>=n || src==dest || w<0){
+                cout<<"illegal arguments src,dest should different numbers be between 0 to n-1 and weight must not be negative"<<endl;
                 continue;
             }
-            cout<<"enter weight"<<endl;
-            cin>>w;
             arr[src*n+dest+1]=w;//src*n + dest to change from matrix to arr +1 is because of the size
         }
         cout << "Graph sent to server." << endl;
@@ -77,7 +75,8 @@ int main(){
         }
         arr[n*n+1] = algo; // Store the selected algorithm type at the end of the array
         // Send the selected algorithm to the server
-        send(sock, &arr,(n*n + 2)*sizeof(int), 0);
+        send(sock, arr,(n*n + 2)*sizeof(int), 0);
+        delete[] arr; // Free the dynamically allocated memory
         char buffer[4096] = {0};
         int bytesReceived = recv(sock, buffer, sizeof(buffer), 0);
         if (bytesReceived > 0) {

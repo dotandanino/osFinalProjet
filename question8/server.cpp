@@ -48,13 +48,12 @@ Graph createRandomGraph(int numOfVertex, int numOfEdges, int RandomSeed,int minW
         int dest =rand()%numOfVertex;
         int weight = rand() % (maxWeight - minWeight + 1) + minWeight;
         try{
-            g.addDirectedEdge(src,dest,weight);
+            g.addDirectedEdge(src,dest  ,weight);
             edgesAdded++;
         }catch(const std::exception& e){
             //nothing to do here just wait for another graph
         }
     }
-    g.printGraph();
     return g;
 }
 
@@ -64,14 +63,12 @@ void clientHandle(){
         {
             std::unique_lock<std::mutex> lock(mtx);
             cv.wait(lock, []{ return !q.empty() || !server_running; });
-            cout << "finished wait"<<endl;
             if(!q.empty()) {
                 fd = q.front();
                 q.pop();
             }
         }
         if(!server_running && fd == -1) {
-            cout << "Server is not running and no file descriptor is available." << endl;
             break; // Exit if server is not running and no file descriptor is available
         }
         if (fd == -1) {
@@ -80,7 +77,6 @@ void clientHandle(){
         int buffer[BUFFERSIZE / sizeof(int)];
         int byteRecv = recv(fd,buffer,BUFFERSIZE,0);
         if(byteRecv==0){
-            cout << "Client disconnected." << endl;
             close(fd);
             auto it = std::remove_if(fds.begin(), fds.end(), [fd](const pollfd& p) {
                 return p.fd == fd;
@@ -103,13 +99,9 @@ void clientHandle(){
             }
             cout << "Creating random graph with " << numOfVertex << " vertices, " << numOfEdges << " edges, and random seed " << RandomSeed << endl;
             Graph g = createRandomGraph(numOfVertex, numOfEdges, RandomSeed,minWeight, maxWeight);
-            cout<<"Before MaxFlow"<<endl;
             std::string result = algo1->execute(g);
-            cout<<"Before MST"<<endl;
             result += "\n" + algo2->execute(g);
-            cout<<"Before PathCover"<<endl;
             result += "\n" + algo3->execute(g);
-            cout<<"Before SCC"<<endl;
             result += "\n" + algo4->execute(g);
             cout << "Sending results to client..." << endl;
             send(fd, result.c_str(), result.size(), 0);
@@ -122,13 +114,9 @@ void clientHandle(){
             }
         }
         Graph g(n,neighborsMatrix);
-        cout<<"Before MaxFlow"<<endl;
         std::string result = algo1->execute(g);
-        cout<<"Before MST"<<endl;
         result += "\n" + algo2->execute(g);
-        cout<<"Before PathCover"<<endl;
         result += "\n" + algo3->execute(g);
-        cout<<"Before SCC"<<endl;
         result += "\n" + algo4->execute(g);
         cout << "Sending results to client..." << endl;
         send(fd, result.c_str(), result.size(), 0);
@@ -178,7 +166,6 @@ int main(){
     fds[1].fd = STDIN_FILENO; // Add stdin to the poll list
     fds[1].events = POLLIN;
 
-    int buffer[BUFFERSIZE / sizeof(int)];
     for(;;){
         int poll_count = poll(fds.data(), fd_count, -1);
         if (poll_count < 0) {
@@ -195,7 +182,6 @@ int main(){
                     // Handle input from stdin
                     string input;
                     getline(cin, input);
-                    cout<<"input is "<<input<<endl;
                     if(input == "exit") {
                         server_running = false;
                         for(int j=2; j<fd_count; j++) {

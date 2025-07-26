@@ -20,15 +20,22 @@ $(CLIENT):../question9/client.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 valgrind_server: $(SERVER) $(CLIENT)
-	valgrind --leak-check=full --track-origins=yes ./$(SERVER)
+	valgrind --leak-check=full --track-origins=yes --log-file=server_valgrind_report.txt ./$(SERVER)
 
 valgrind_client: $(CLIENT)
-	valgrind --leak-check=full --track-origins=yes ./$(CLIENT)
+	valgrind --leak-check=full --track-origins=yes --log-file=client_valgrind_report.txt ./$(CLIENT)
 
-helgrind_server: $(SERVER) $(CLIENT)
-	valgrind --tool=helgrind ./$(SERVER)
+helgrind_server: $(SERVER)
+	valgrind --tool=helgrind --log-file=server_helgrind_report.txt ./$(SERVER)
 
+helgrind_client: $(CLIENT)
+	valgrind --tool=helgrind --log-file=client_helgrind_report.txt ./$(CLIENT)
 
+callgrind_server: $(SERVER)
+	valgrind --tool=callgrind --callgrind-out-file=callgrind_server.out ./$(SERVER)
+
+callgrind_client: $(CLIENT)
+	valgrind --tool=callgrind --callgrind-out-file=callgrind_client.out ./$(CLIENT)
 
 clean:
 	rm -f $(SERVER) $(CLIENT) $(OBJ)

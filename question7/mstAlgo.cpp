@@ -40,5 +40,5 @@ std::string MSTAlgo::execute(const Graph& g) const {
             weightSum += g.getNeighborsMatrix()[parent[v]][v];//sum the weights of the edges in the MST
         }
     }
-    return std::to_string(weightSum);
+    return "mst weight is: " + std::to_string(weightSum);
 }
