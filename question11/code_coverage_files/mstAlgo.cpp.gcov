@@ -1,0 +1,45 @@
+        -:    0:Source:../question7/mstAlgo.cpp
+        -:    1:#include "mstAlgo.hpp"
+        -:    2:/**
+        -:    3: * we are running the Prim's algorithm to find the minimum spanning tree of the graph.
+        -:    4: * The algorithm starts from an arbitrary vertex (in this case, vertex 0) and grows
+        -:    5: * the MST by adding the minimum weight edge that connects a vertex in the MST to a vertex
+        -:    6: * outside the MST until all vertices are included.
+        -:    7: * @param g the graph to find the minimum spanning tree of
+        -:    8: * @return a string representation of the total weight of the minimum spanning tree
+        -:    9: */
+        6:   10:std::string MSTAlgo::execute(const Graph& g) const {
+        6:   11:    int n = g.getNumOfVertex();
+        6:   12:    std::vector<bool> inMST(n, false);//if the vertex is already in the MST
+        6:   13:    std::vector<int> key(n, INT_MAX);// key[v] is the minimum weight edge connecting vertex v to the MST
+        6:   14:    std::vector<int> parent(n, -1);// parent[v] is the vertex in the MST that connects to vertex v
+        6:   15:    key[0] = 0;
+        -:   16:
+        -:   17:    // min-heap: {weight, vertex}
+        6:   18:    std::priority_queue<std::pair<int,int>, std::vector<std::pair<int,int>>, std::greater<>> pq;// priority queue to get the minimum weight edge every time
+        6:   19:    pq.push({0, 0});
+        -:   20:
+       70:   21:    while (!pq.empty()) {
+       64:   22:        int u = pq.top().second;
+       64:   23:        pq.pop();
+       64:   24:        if (inMST[u]) continue; // If u is already in the MST, skip it
+       52:   25:        inMST[u] = true;
+        -:   26:
+       52:   27:        const auto& neighbors = g.getNeighborsMatrix()[u];
+      547:   28:        for (int v = 0; v < n; ++v) {//update the key and parent of the neighbors of u
+      495:   29:            int weight = neighbors[v];
+      495:   30:            if (weight > 0 && !inMST[v] && weight < key[v]) {
+       58:   31:                key[v] = weight;
+       58:   32:                parent[v] = u;
+       58:   33:                pq.push({weight, v});//if its will be duplicate not realy matter because we will pop the minimum weight edge every time and check if the vertex is already in the MST
+        -:   34:            }
+        -:   35:        }
+        -:   36:    }
+        6:   37:    int weightSum = 0;
+       55:   38:    for (int v = 1; v < n; ++v) {
+       49:   39:        if (parent[v] != -1) {
+       46:   40:            weightSum += g.getNeighborsMatrix()[parent[v]][v];//sum the weights of the edges in the MST
+        -:   41:        }
+        -:   42:    }
+       12:   43:    return "mst weight is: " + std::to_string(weightSum);
+        6:   44:}

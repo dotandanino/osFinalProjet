@@ -1,0 +1,21 @@
+        -:    0:Source:../question7/algoFactory.cpp
+        -:    1:#include "algoFactory.hpp"
+        -:    2:#include "maxFlowAlgo.hpp"
+        -:    3:#include "mstAlgo.hpp"
+        -:    4:#include "pathCoverAlgo.hpp"
+        -:    5:#include "sccAlgo.hpp"
+        -:    6:
+       16:    7:std::unique_ptr<GraphAlgorithm> createAlgorithm(AlgorithmType algoType) {
+       16:    8:    switch(algoType) {
+        4:    9:        case AlgorithmType::MaxFlow:
+        4:   10:            return std::make_unique<maxFlowAlgo>();
+        4:   11:        case AlgorithmType::MST:
+        4:   12:            return std::make_unique<MSTAlgo>();
+        4:   13:        case AlgorithmType::PathCover:
+        4:   14:            return std::make_unique<PathCoverAlgo>();
+        4:   15:        case AlgorithmType::SCC:
+        4:   16:            return std::make_unique<SCCAlgo>();
+    #####:   17:        default:
+    #####:   18:            return nullptr; // there is no such algorithm
+        -:   19:    }
+        -:   20:}

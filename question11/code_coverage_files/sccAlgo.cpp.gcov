@@ -1,0 +1,94 @@
+        -:    0:Source:../question7/sccAlgo.cpp
+        -:    1:#include "sccAlgo.hpp"
+        -:    2:/**
+        -:    3: * a function to perform DFS on the original graph in use to order the vertices by their finishing times.
+        -:    4: * @param v the current vertex
+        -:    5: * @param g the graph to perform DFS on
+        -:    6: * @param visited a vector to keep track of visited vertices
+        -:    7: * @param finished a stack to store the vertices in the order of their finishing times
+        -:    8: */
+       55:    9:void dfsOriginal(int v, const Graph& g, std::vector<bool>& visited, std::stack<int>& finished) {
+       55:   10:    visited[v] = true;
+       55:   11:    const auto& matrix = g.getNeighborsMatrix();
+      580:   12:    for (int i = 0; i < g.getNumOfVertex(); ++i) {
+      525:   13:        if (matrix[v][i] >= 0 && !visited[i]) {
+       47:   14:            dfsOriginal(i, g, visited, finished);
+        -:   15:        }
+        -:   16:    }
+       55:   17:    finished.push(v);
+       55:   18:}
+        -:   19:
+        -:   20:/**
+        -:   21: * a function to get the transpose of the graph.
+        -:   22: * @param g the original graph
+        -:   23: * @return a new graph that is the transpose of the original graph
+        -:   24: */
+        6:   25:Graph getTranspose(const Graph& g) {
+        6:   26:    int n = g.getNumOfVertex();
+        6:   27:    Graph transposed(n);
+        6:   28:    const auto& matrix = g.getNeighborsMatrix();
+       61:   29:    for (int i = 0; i < n; ++i) {
+      580:   30:        for (int j = 0; j < n; ++j) {
+      525:   31:            if (matrix[i][j] >= 0) {
+      141:   32:                transposed.addDirectedEdge(j, i, matrix[i][j]);
+        -:   33:            }
+        -:   34:        }
+        -:   35:    }
+        6:   36:    return transposed;
+    =====:   37:}
+        -:   38:
+        -:   39:/**
+        -:   40: * a function to perform DFS on the transposed graph to find strongly connected components.
+        -:   41: * @param v the current vertex
+        -:   42: * @param g the transposed graph
+        -:   43: * @param visited a vector to keep track of visited vertices
+        -:   44: * @param component a vector to store the current strongly connected component
+        -:   45: */
+       55:   46:void dfsTranspose(int v, const Graph& g, std::vector<bool>& visited, std::vector<int>& component) {
+       55:   47:    visited[v] = true;
+       55:   48:    component.push_back(v);
+       55:   49:    const auto& matrix = g.getNeighborsMatrix();
+      580:   50:    for (int i = 0; i < g.getNumOfVertex(); ++i) {
+      525:   51:        if (matrix[v][i] >= 0 && !visited[i]) {
+       32:   52:            dfsTranspose(i, g, visited, component);
+        -:   53:        }
+        -:   54:    }
+       55:   55:}
+        -:   56:
+        -:   57:/**
+        -:   58: * a function to execute the Kosaraju's algorithm to find strongly connected components in a directed graph.
+        -:   59: * @param g the directed graph
+        -:   60: * @return a string representation of the strongly connected components found in the graph
+        -:   61: */
+        6:   62:std::string SCCAlgo::execute(const Graph& g) const{
+        6:   63:    int n = g.getNumOfVertex();
+        6:   64:    std::vector<bool> visited(n, false);
+        6:   65:    std::stack<int> finished;
+        -:   66:    // Step 1: Perform DFS on the original graph and fill the stack with vertices in finishing order
+       61:   67:    for (int i = 0; i < n; ++i) {
+       55:   68:        if (!visited[i]) {
+        8:   69:            dfsOriginal(i, g, visited, finished);
+        -:   70:        }
+        -:   71:    }
+        -:   72:    // Step 2: Get the transpose of the graph
+        6:   73:    Graph transposed = getTranspose(g);
+        6:   74:    std::fill(visited.begin(), visited.end(), false);
+        6:   75:    std::ostringstream oss;
+        6:   76:    int count = 0;
+        -:   77:    // step 3: Perform DFS on the transposed graph in the order of finishing times
+       67:   78:    while (!finished.empty()) {
+       55:   79:        int v = finished.top();
+       55:   80:        finished.pop();
+       55:   81:        if (!visited[v]) {
+       23:   82:            std::vector<int> component;
+       23:   83:            dfsTranspose(v, transposed, visited, component);
+        -:   84:            // Step 4: save the strongly connected component in the output string
+       23:   85:            oss << "SCC #" << ++count << ": ";
+       78:   86:            for (int u : component) {
+       55:   87:                oss << u << " ";
+        -:   88:            }
+       23:   89:            oss << "\n";
+       23:   90:        }
+        -:   91:    }
+       12:   92:    return oss.str();
+        6:   93:}

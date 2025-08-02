@@ -1,0 +1,71 @@
+        -:    0:Source:../question7/maxFlowAlgo.cpp
+        -:    1:#include "maxFlowAlgo.hpp"
+        -:    2:/**
+        -:    3: * This function implements the Edmonds-Karp algorithm to find the maximum flow in a flow network.
+        -:    4: * It uses BFS to find augmenting paths in the residual graph.
+        -:    5: * @param resGraph The residual graph represented as an adjacency matrix.
+        -:    6: * @param s The source vertex.
+        -:    7: * @param t The sink vertex.
+        -:    8: * @param parent A vector to store the path from source to sink.
+        -:    9: * @return True if there is an augmenting path from source to sink, false otherwise.
+        -:   10: */
+       30:   11:bool bfs(const std::vector<std::vector<int>>& resGraph,int s, int t, std::vector<int>& parent) {
+       30:   12:    int n = resGraph.size();
+       30:   13:    std::vector<bool> visited(n, false);
+       30:   14:    std::queue<int> q;
+        -:   15:
+       30:   16:    q.push(s);
+       30:   17:    visited[s] = true;
+       30:   18:    parent[s] = -1;
+        -:   19:
+      129:   20:    while (!q.empty()) {
+      123:   21:        int u = q.front();
+      123:   22:        q.pop();
+        -:   23:
+     1304:   24:        for (int v = 0; v < n; ++v) {
+     1205:   25:            if (!visited[v] && resGraph[u][v] > 0) {
+      187:   26:                parent[v] = u;
+      187:   27:                visited[v] = true;
+      187:   28:                q.push(v);
+      187:   29:                if (v == t) return true;// we found an augmenting path
+        -:   30:            }
+        -:   31:        }
+        -:   32:    }
+        6:   33:    return false;  //we didnt found
+       30:   34:}
+        -:   35:/**
+        -:   36: * This function executes the Edmonds-Karp algorithm to find the maximum flow in a flow network.
+        -:   37: * It builds the residual graph from the original graph and uses BFS to find augmenting paths.
+        -:   38: * It calculates the maximum flow by updating the residual graph and summing the path flows.
+        -:   39: * @param g The graph represented as an adjacency matrix.
+        -:   40: * @return A string representation of the maximum flow value.
+        -:   41: */
+        6:   42:std::string maxFlowAlgo::execute(const Graph& g) const {
+        6:   43:    int n = g.getNumOfVertex();
+        6:   44:    int s = 0, t = n - 1;
+        -:   45:
+        6:   46:    std::vector<std::vector<int>> resGraph = g.getNeighborsMatrix();  // building the residual graph from the original graph
+        -:   47:
+        6:   48:    std::vector<int> parent(n);
+        6:   49:    int maxFlow = 0;
+        -:   50:
+       30:   51:    while (bfs(resGraph, s, t, parent)) {
+       24:   52:        int pathFlow = INT_MAX;
+        -:   53:
+        -:   54:        // find the lowest capacity in the path.
+      103:   55:        for (int v = t; v != s; v = parent[v]) {
+       79:   56:            int u = parent[v];
+       79:   57:            pathFlow = std::min(pathFlow, resGraph[u][v]);
+        -:   58:        }
+        -:   59:
+        -:   60:        //update the residual graph
+      103:   61:        for (int v = t; v != s; v = parent[v]) {
+       79:   62:            int u = parent[v];
+       79:   63:            resGraph[u][v] -= pathFlow;
+       79:   64:            resGraph[v][u] += pathFlow;
+        -:   65:        }
+        -:   66:
+       24:   67:        maxFlow += pathFlow;
+        -:   68:    }
+       12:   69:    return "max flow is: " + std::to_string(maxFlow);
+        6:   70:}

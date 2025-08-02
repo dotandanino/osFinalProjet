@@ -1,0 +1,371 @@
+        -:    0:Source:server.cpp
+        -:    1:#include <iostream>
+        -:    2:#include <sys/socket.h>
+        -:    3:#include <arpa/inet.h>
+        -:    4:#include <unistd.h>
+        -:    5:#include <string.h>
+        -:    6:#include <poll.h>
+        -:    7:#include <unistd.h>
+        -:    8:#include "../question7/Graph.hpp"
+        -:    9:#include "../question7/algoFactory.hpp"
+        -:   10:#include <thread>
+        -:   11:#include <mutex>
+        -:   12:#include <vector>
+        -:   13:#include <queue>
+        -:   14:#include <condition_variable>
+        -:   15:#include <algorithm>
+        -:   16:#include <atomic>
+        -:   17:
+        -:   18:#define PORT 8080
+        -:   19:#define BUFFERSIZE 4096
+        -:   20:using namespace std;
+        -:   21:#define N 5
+        -:   22:std::mutex mtx1,mtx2,mtx3,mtx4,mtx5,mtx6; // Mutex for thread safety
+        -:   23:std::condition_variable cv1,cv2,cv3,cv4,cv5,cv6; // Condition variables for signaling
+        -:   24:
+        -:   25:int fd_count = 2;
+        -:   26:vector<pollfd> fds(fd_count);
+        -:   27:
+        -:   28:
+        -:   29:struct toqueue {
+        -:   30:    int fd;
+        -:   31:    std::string result;
+        -:   32:    Graph g;
+        -:   33:};
+        -:   34:std::queue<int> q1; // Queue to hold file descriptors
+        -:   35:std::queue<toqueue> q2,q3,q4,q5,q6;
+        -:   36:
+        -:   37:std::unique_ptr<GraphAlgorithm> algo1 = createAlgorithm(static_cast<AlgorithmType>(1));
+        -:   38:std::unique_ptr<GraphAlgorithm> algo2 = createAlgorithm(static_cast<AlgorithmType>(2));
+        -:   39:std::unique_ptr<GraphAlgorithm> algo3 = createAlgorithm(static_cast<AlgorithmType>(3));
+        -:   40:std::unique_ptr<GraphAlgorithm> algo4 = createAlgorithm(static_cast<AlgorithmType>(4));
+        -:   41:
+        5:   42:Graph createRandomGraph(int numOfVertex, int numOfEdges, int RandomSeed,int minWeight, int maxWeight) {
+        5:   43:    unsigned long maxEdge = (numOfVertex -1)*numOfVertex;
+        5:   44:    if((unsigned long)numOfEdges>maxEdge){
+        1:   45:        throw std::runtime_error("You entered too many edges");
+        -:   46:        exit(1);
+        -:   47:    }
+        4:   48:    int edgesAdded=0;
+        4:   49:    Graph g(numOfVertex);
+        4:   50:    srand(RandomSeed);
+      166:   51:    while(edgesAdded<numOfEdges){
+      162:   52:        int src=rand()%numOfVertex;
+      162:   53:        int dest =rand()%numOfVertex;
+      162:   54:        int weight = rand() % (maxWeight - minWeight + 1) + minWeight;
+        -:   55:        try{
+      162:   56:            g.addDirectedEdge(src,dest,weight);
+      146:   57:            edgesAdded++;
+       16:   58:        }catch(const std::exception& e){
+        -:   59:            //nothing to do here just wait for another graph
+       16:   60:        }
+        -:   61:    }
+        4:   62:    return g;
+    =====:   63:}
+        -:   64:
+        -:   65:std::atomic<bool> server_running(true); // Flag to control server running state
+        -:   66:
+        4:   67:void maxFlow(){
+       10:   68:    while(server_running) {
+       10:   69:        Graph g(1);//temp
+       10:   70:        int fd = -1;
+        -:   71:        {
+       10:   72:            std::unique_lock<std::mutex> lock(mtx2);
+       30:   73:            cv2.wait(lock, []{ return !q2.empty() || !server_running;}); // Wait until there is something in the queue
+       10:   74:            if(!q2.empty()) {
+        6:   75:                auto item = q2.front();
+        6:   76:                q2.pop();
+        6:   77:                fd = item.fd;
+        6:   78:                g = item.g;
+        6:   79:            }
+       10:   80:        }
+       10:   81:        if(fd == -1 && !server_running) {
+        4:   82:            break; // Exit if server is not running and no file descriptor is available
+        -:   83:        }
+       6*:   84:        if (fd == -1) {
+    #####:   85:            continue;
+        -:   86:        }
+        6:   87:        std::string result = algo1->execute(g);
+        -:   88:        {
+        6:   89:            std::lock_guard<std::mutex> lock(mtx3);
+        6:   90:            q3.push({fd, result, g});
+        6:   91:            cv3.notify_one();
+        6:   92:        }
+       10:   93:    }
+       10:   94:}
+        -:   95:
+        4:   96:void MST(){
+       10:   97:    while(server_running) {
+       10:   98:        Graph g(1);//temp
+       10:   99:        std::string result;
+       10:  100:        int fd = -1;
+        -:  101:        {
+       10:  102:            std::unique_lock<std::mutex> lock(mtx3);
+       30:  103:            cv3.wait(lock, []{ return !q3.empty() || !server_running;}); // Wait until there is something in the queue
+       10:  104:            if(!q3.empty()) {
+        6:  105:                auto item = q3.front();
+        6:  106:                q3.pop();
+        6:  107:                fd = item.fd;
+        6:  108:                g = item.g;
+        6:  109:                result = item.result;
+        6:  110:            }
+       10:  111:        }
+       10:  112:        if(fd == -1 && !server_running) {
+        4:  113:            break; // Exit if server is not running and no file descriptor is available
+        -:  114:        }
+       6*:  115:        if (fd == -1) {
+    #####:  116:            continue;
+        -:  117:        }
+        6:  118:        result +="\n";
+        6:  119:        result += algo2->execute(g);
+        -:  120:        {
+        6:  121:            std::lock_guard<std::mutex> lock(mtx4);
+        6:  122:            q4.push({fd, result, g});
+        6:  123:            cv4.notify_one();
+        6:  124:        }
+       14:  125:    }
+       10:  126:}
+        -:  127:
+        4:  128:void PathCover(){
+       10:  129:    while(server_running) {
+       10:  130:        Graph g(1);//temp
+       10:  131:        std::string result;
+       10:  132:        int fd = -1;
+        -:  133:        {
+       10:  134:            std::unique_lock<std::mutex> lock(mtx4);
+       30:  135:            cv4.wait(lock, []{ return !q4.empty() || !server_running; }); // Wait until there is something in the queue
+       10:  136:            if(!q4.empty()) {
+        6:  137:                auto item = q4.front();
+        6:  138:                q4.pop();
+        6:  139:                fd = item.fd;
+        6:  140:                g = item.g;
+        6:  141:                result = item.result;
+        6:  142:            }
+       10:  143:        }
+       10:  144:        if(fd == -1 && !server_running) {
+        4:  145:            break; // Exit if server is not running and no file descriptor is available
+        -:  146:        }
+       6*:  147:        if (fd == -1) {
+    #####:  148:            continue;
+        -:  149:        }
+        6:  150:        result += "\n";
+        6:  151:        result += algo3->execute(g);
+        -:  152:        {
+        6:  153:            std::lock_guard<std::mutex> lock(mtx5);
+        6:  154:            q5.push({fd, result, g});
+        6:  155:            cv5.notify_one();
+        6:  156:        }
+       14:  157:    }
+       10:  158:}
+        -:  159:
+        -:  160:
+        4:  161:void SCC(){
+       10:  162:    while(server_running) {
+       10:  163:        Graph g(1);//temp
+       10:  164:        std::string result;
+       10:  165:        int fd = -1;
+        -:  166:        {
+       10:  167:            std::unique_lock<std::mutex> lock(mtx5);
+       30:  168:            cv5.wait(lock, []{ return !q5.empty() || !server_running; }); // Wait until there is something in the queue
+       10:  169:            if(!q5.empty()) {
+        6:  170:                auto item = q5.front();
+        6:  171:                q5.pop();
+        6:  172:                fd = item.fd;
+        6:  173:                g = item.g;
+        6:  174:                result = item.result;
+        6:  175:            }
+       10:  176:        }
+       10:  177:        if(fd == -1 && !server_running) {
+        4:  178:            break; // Exit if server is not running and no file descriptor is available
+        -:  179:        }
+       6*:  180:        if (fd == -1) {
+    #####:  181:            continue;
+        -:  182:        }
+        6:  183:        result += "\n";
+        6:  184:        result += algo4->execute(g);
+        -:  185:        {
+        6:  186:            std::lock_guard<std::mutex> lock(mtx6);
+        6:  187:            q6.push({fd, result, g});
+        6:  188:            cv6.notify_one();
+        6:  189:        }
+       14:  190:    }
+       10:  191:}
+        -:  192:
+        -:  193:
+        4:  194:void senderHandle(){
+       10:  195:    while(server_running) {
+       10:  196:        int fd=-1;
+       10:  197:        string result;
+        -:  198:        {
+       10:  199:            std::unique_lock<std::mutex> lock(mtx6);
+       30:  200:            cv6.wait(lock, []{ return !q6.empty() || !server_running;}); // Wait until there is something in the queue
+       10:  201:            if(!q6.empty()) {
+        6:  202:                toqueue item = q6.front();
+        6:  203:                fd = item.fd;
+        6:  204:                result = item.result;
+        6:  205:                q6.pop();
+        6:  206:            }
+       10:  207:        }
+       10:  208:        if(fd == -1 && !server_running) {
+        4:  209:            break; // Exit if server is not running and no file descriptor is available
+        -:  210:        }
+       6*:  211:        if (fd == -1) {
+    #####:  212:            continue;
+        -:  213:        }
+        6:  214:        send(fd, result.c_str(), result.size(), 0);
+       10:  215:    }
+        4:  216:}
+        -:  217:
+        -:  218:
+        4:  219:int main(){
+        -:  220:    int server_fd;
+        -:  221:    struct sockaddr_in address;
+        4:  222:    int opt = 1;
+        4:  223:    int addrlen = sizeof(address);
+       24:  224:    std::thread threads[5];
+        4:  225:    threads[0] = std::thread(maxFlow);
+        4:  226:    threads[1] = std::thread(MST);
+        4:  227:    threads[2] = std::thread(PathCover);
+        4:  228:    threads[3] = std::thread(SCC);
+        4:  229:    threads[4] = std::thread(senderHandle);
+        -:  230:
+        -:  231:    // create the socket
+        4:  232:    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    #####:  233:        perror("socket failed");
+    #####:  234:        exit(EXIT_FAILURE);
+        -:  235:    }
+        -:  236:
+        -:  237:    // set socket options to allow reuse of the address and port
+        4:  238:    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+    #####:  239:        perror("setsockopt failed");
+    #####:  240:        exit(EXIT_FAILURE);
+        -:  241:    }
+        -:  242:    
+        4:  243:    address.sin_family = AF_INET;
+        4:  244:    address.sin_addr.s_addr = INADDR_ANY;
+        4:  245:    address.sin_port = htons(PORT);
+        -:  246:    
+        -:  247:    // connect the socket to the address and port
+        4:  248:    if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
+    #####:  249:        perror("bind failed");
+    #####:  250:        exit(EXIT_FAILURE);
+        -:  251:    }
+        -:  252:
+        -:  253:    // create a queue with 10 places for the socket to listen for incoming connections
+        4:  254:    if (listen(server_fd, 10) < 0) {
+    #####:  255:        perror("listen failed");
+    #####:  256:        exit(EXIT_FAILURE);
+        -:  257:    }
+        -:  258:    // a vector to hold the file descriptors for polling
+        4:  259:    fds[0].fd = server_fd;
+        4:  260:    fds[0].events = POLLIN;
+        4:  261:    fds[1].fd = STDIN_FILENO; // Add stdin to the poll list
+        4:  262:    fds[1].events = POLLIN;
+        -:  263:
+        -:  264:    int buffer[BUFFERSIZE / sizeof(int)];
+        -:  265:    for(;;){
+       23:  266:        int poll_count = poll(fds.data(), fd_count, -1);
+       23:  267:        if (poll_count < 0) {
+    #####:  268:            perror("poll failed");
+    #####:  269:            exit(EXIT_FAILURE);
+        -:  270:        }
+       89:  271:        for(int i=0;i<fd_count;i++){
+       70:  272:            if(fds[i].revents & POLLIN){
+       23:  273:                if(fds[i].fd == server_fd){
+        7:  274:                    int new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
+        7:  275:                    fds.push_back({new_socket, POLLIN});
+        7:  276:                    fd_count++;
+        -:  277:                }
+       16:  278:                else if(fds[i].fd == STDIN_FILENO){
+        -:  279:                    // Handle input from stdin
+        4:  280:                    string input;
+        4:  281:                    cin >> input;
+        4:  282:                    if(input == "exit") {
+        4:  283:                        server_running = false;
+        7:  284:                        for(int j=2; j<fd_count; j++) {
+        3:  285:                            close(fds[j].fd); // Close all client sockets
+        -:  286:                        }
+        4:  287:                        close(server_fd); // Close the server socket
+        4:  288:                        server_running = false; // Set the server running flag to false
+        -:  289:                        {
+        4:  290:                            std::lock_guard<std::mutex> lock(mtx1);
+        4:  291:                            cv1.notify_all(); // Notify all waiting threads to exit
+        4:  292:                        }
+        -:  293:                        {
+        4:  294:                            std::lock_guard<std::mutex> lock(mtx2);
+        4:  295:                            cv2.notify_all();
+        4:  296:                        }
+        -:  297:                        {
+        4:  298:                            std::lock_guard<std::mutex> lock(mtx3);
+        4:  299:                            cv3.notify_all();
+        4:  300:                        }
+        -:  301:                        {
+        4:  302:                            std::lock_guard<std::mutex> lock(mtx4);
+        4:  303:                            cv4.notify_all();
+        4:  304:                        }
+        -:  305:                        {
+        4:  306:                            std::lock_guard<std::mutex> lock(mtx5);
+        4:  307:                            cv5.notify_all();
+        4:  308:                        }
+        -:  309:                        {
+        4:  310:                            std::lock_guard<std::mutex> lock(mtx6);
+        4:  311:                            cv6.notify_all();
+        4:  312:                        }
+       24:  313:                        for(int i=0;i<5;i++){
+       20:  314:                            threads[i].join(); // Wait for all threads to finish
+        -:  315:                        }
+        4:  316:                        exit(0);
+        -:  317:                    }
+    #####:  318:                }
+        -:  319:                else{
+       12:  320:                    int byteRecv = recv(fds[i].fd,buffer,BUFFERSIZE,0);
+       12:  321:                    if(byteRecv==0){
+        4:  322:                        close(fds[i].fd);
+        4:  323:                        fds.erase(fds.begin() + i);
+        4:  324:                        fd_count--;
+       10:  325:                        continue;
+        -:  326:                    }
+        8:  327:                    int n=buffer[0];
+        8:  328:                    if(n == 0) {
+        6:  329:                        int numOfVertex = buffer[1];
+        6:  330:                        int numOfEdges = buffer[2];
+        6:  331:                        int RandomSeed = buffer[3];
+        6:  332:                        int minWeight = buffer[4];
+        6:  333:                        int maxWeight = buffer[5];
+        6:  334:                        if (minWeight > maxWeight) {
+        1:  335:                            string e = "Error: minWeight cannot be greater than maxWeight";
+        1:  336:                            send(fds[i].fd, e.c_str(), e.size(), 0);
+        1:  337:                            continue;
+        1:  338:                        }
+        -:  339:                        try{
+        5:  340:                            Graph g = createRandomGraph(numOfVertex, numOfEdges, RandomSeed,minWeight, maxWeight);
+        -:  341:                            {
+        4:  342:                                std::lock_guard<std::mutex> lock(mtx2);
+        8:  343:                                q2.push({fds[i].fd, "", g});
+        4:  344:                                cv2.notify_one();
+        4:  345:                            }
+        4:  346:                        }
+        1:  347:                        catch(const std::exception& e){
+        1:  348:                            string errorMsg = "Error creating random graph: " + std::string(e.what());
+        1:  349:                            send(fds[i].fd, errorMsg.c_str(), errorMsg.size(), 0);
+        1:  350:                        }
+        5:  351:                        continue;
+        5:  352:                    }
+        -:  353:
+        2:  354:                    vector<vector<int>> neighborsMatrix(n, vector<int>(n, -1));
+       17:  355:                    for(int i=0;i<n;i++){
+      140:  356:                        for(int j=0;j<n;j++){
+      125:  357:                            neighborsMatrix[i][j]=buffer[i*n+j+1];
+        -:  358:                        }
+        -:  359:                    }
+        2:  360:                    Graph g(n,neighborsMatrix);
+        -:  361:                    {
+        2:  362:                        std::lock_guard<std::mutex> lock(mtx2);
+        4:  363:                        q2.push({fds[i].fd, "", g});
+        2:  364:                        cv2.notify_one();
+        2:  365:                    }
+        2:  366:                }
+        -:  367:            }
+        -:  368:        }
+       19:  369:    }
+       18:  370:}

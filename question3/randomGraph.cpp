@@ -44,7 +44,6 @@ int main(int argc, char* argv[]) {
 
         }
     }
-    g.printGraph();
     std::vector<int> resualt = g.findEuler();
     if(resualt.size()!=0){
         std::cout<<"The resualt is:"<<std::endl;

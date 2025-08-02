@@ -1,0 +1,89 @@
+        -:    0:Source:client.cpp
+        -:    1:#include <iostream>
+        -:    2:#include <sys/socket.h>
+        -:    3:#include <arpa/inet.h>
+        -:    4:#include <unistd.h>
+        -:    5:#include <string.h>
+        -:    6:
+        -:    7:#define PORT 8080
+        -:    8:#define BUFFER_SIZE 1024
+        -:    9:#define SERVER_IP "127.0.0.1"
+        -:   10:using namespace std;
+        -:   11:
+        8:   12:int main(){
+        8:   13:    int sock = 0;
+        -:   14:    struct sockaddr_in serv_addr;
+        -:   15:    
+        -:   16:    
+        8:   17:    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    #####:   18:        cerr << "Socket creation error" << endl;
+       1*:   19:        return -1;
+        -:   20:    }
+        -:   21:    
+        8:   22:    serv_addr.sin_family = AF_INET;
+        8:   23:    serv_addr.sin_port = htons(PORT);
+        -:   24:    
+        -:   25:    
+        8:   26:    if(inet_pton(AF_INET, SERVER_IP, &serv_addr.sin_addr) <= 0) {
+    #####:   27:        cerr << "Invalid address / Address not supported" << endl;
+    #####:   28:        return -1;
+        -:   29:    }
+        -:   30:    
+        -:   31:
+        8:   32:    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        1:   33:        cerr << "Connection Failed" << endl;
+        1:   34:        return -1;
+        -:   35:    }
+        7:   36:    int n =0 ;
+        -:   37:    int src,dest,w;
+        -:   38:    for(;;){
+       17:   39:        cout<<"enter number of vertices if you want to exit enter -1 if you want random graph enter 0"<<endl;
+       17:   40:        cin>>n;
+       17:   41:        if(n == 0) {
+        7:   42:            cout << "Random graph selected." << endl;
+        7:   43:            cout<< "Enter number of vertices, edges, random seed, min weight , max weight: ";
+        -:   44:            int numOfVertex, numOfEdges, RandomSeed, minWeight, maxWeight;
+        7:   45:            cin >> numOfVertex >> numOfEdges >> RandomSeed >> minWeight >> maxWeight;
+        7:   46:            int arr[6] = {n, numOfVertex, numOfEdges, RandomSeed, minWeight, maxWeight};
+        7:   47:            send(sock, arr, sizeof(arr), 0);
+        -:   48:        }
+       10:   49:        else if(n==-1){
+        7:   50:            close(sock);
+        7:   51:            cout << "Connection closed." << endl;
+        7:   52:            break;
+        -:   53:        }
+        3:   54:        else if(n<-1){
+        1:   55:            cout<<"n must be positive number"<<endl;
+        1:   56:            continue;
+        -:   57:        }else{
+       2*:   58:            int* arr = new int[n*n+1]; //n*n for the neighbor matrix and extra place for the size
+        2:   59:            arr[0]=n;
+      127:   60:            for(int i=1;i<n*n+1;i++){
+      125:   61:                arr[i]=-1; // initialize the matrix with -1
+        -:   62:            }
+        2:   63:            cout<<"now you will need to enter the neighbor matrix if you want to stop enter 0 for both src and dest"<<endl;
+        -:   64:            for(;;){
+       16:   65:                w=0;
+       16:   66:                cout<<"enter src dest weight"<<endl;
+       16:   67:                cin>>src>>dest>>w;
+       16:   68:                if(dest==src && dest==0){
+        2:   69:                    break;
+        -:   70:                }
+       14:   71:                if(dest<0 || dest>=n || src<0 || src>=n || src==dest || w<0){
+        1:   72:                    cout<<"illegal arguments src,dest should different numbers be between 0 to n-1 and weight must not be negative"<<endl;
+        1:   73:                    continue;
+        -:   74:                }
+       13:   75:                arr[src*n+dest+1]=w;//src*n + dest to change from matrix to arr +1 is because of the size
+        -:   76:            }
+        2:   77:            send(sock, arr,(n*n + 1)*sizeof(int), 0);
+        2:   78:            cout << "Graph sent to server." << endl;
+        2:   79:            delete[] arr;
+        -:   80:        }
+        9:   81:        char buffer[4096] = {0};
+        9:   82:        int bytesReceived = recv(sock, buffer, sizeof(buffer), 0);
+        9:   83:        if (bytesReceived > 0) {
+        8:   84:            std::string received(buffer, bytesReceived);
+        8:   85:            cout << received << endl;
+        8:   86:        }
+       10:   87:    }
+        7:   88:}

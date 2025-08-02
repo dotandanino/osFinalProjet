@@ -51,7 +51,7 @@ Graph2.o: Graph.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -pg -c $< -o $@
 
 profiling:$(TARGET2)
-	./$(TARGET2) -v 524 -e 1058 -r 42 
+	./$(TARGET2) -v 1025 -e 524800 -r 42 
 	gprof --brief  -b -p -q randomGraph2 gmon.out > profiling.txt
 
 .PHONY: all coverage profiling valgrind valgrindCallGraph clean

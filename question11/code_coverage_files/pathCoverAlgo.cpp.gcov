@@ -1,0 +1,113 @@
+        -:    0:Source:../question7/pathCoverAlgo.cpp
+        -:    1:#include "pathCoverAlgo.hpp"
+        -:    2:using namespace std;
+        -:    3:enum State { UNVISITED, VISITING, VISITED };
+        -:    4:
+       27:    5:bool dfs(int node, const vector<vector<int>>& graph, vector<State>& state) {
+       27:    6:    state[node] = VISITING;
+      176:    7:    for (int i=0; i <(int) graph[node].size(); ++i) {
+      161:    8:        if(graph[node][i] < 0) continue; // skip if no edge
+       25:    9:        if (state[i] == VISITING) {//if we comeback to the same vtx we have cycle
+        4:   10:            return true;
+        -:   11:        }
+       21:   12:        if (state[i] == UNVISITED) {
+       21:   13:            if (dfs(i, graph, state)) return true;
+        -:   14:        }
+        -:   15:    }
+       15:   16:    state[node] = VISITED;
+       15:   17:    return false;
+        -:   18:}
+        -:   19:
+        6:   20:bool hasCycle(const vector<vector<int>>& graph) {
+        6:   21:    int n = graph.size();
+        6:   22:    vector<State> state(n, UNVISITED);
+       21:   23:    for (int i = 0; i < n; ++i) {
+       19:   24:        if (state[i] == UNVISITED) {
+        6:   25:            if (dfs(i, graph, state)) return true;
+        -:   26:        }
+        -:   27:    }
+        2:   28:    return false;
+        6:   29:}
+        -:   30:
+        6:   31:std::string PathCoverAlgo::execute(const Graph& g) const {
+        6:   32:    int n = g.getNumOfVertex();
+        6:   33:    const auto& graph = g.getNeighborsMatrix();
+        -:   34:    // Step 1: check if DAG
+        6:   35:    if (hasCycle(graph)) {
+        8:   36:        return "Graph contains a cycle";
+        -:   37:    }
+        -:   38:    // Step 2: build bipartite graph from DAG
+        2:   39:    vector<vector<int>> bipartiteGraph(n); // u_out -> list of v_in
+       17:   40:    for (int u = 0; u < n; ++u) {
+      140:   41:        for (int v = 0; v < n; ++v) {
+      125:   42:            if (graph[u][v] >= 0) {
+       13:   43:                bipartiteGraph[u].push_back(v); // from u_out to v_in
+        -:   44:            }
+        -:   45:        }
+        -:   46:    }
+        -:   47:    // Step 3: maximum bipartite matching (using DFS)
+        2:   48:    vector<int> matchTo(n, -1); // v_in matched to u_out
+    #####:   49:    function<bool(int, vector<bool>&)> bpm = [&](int u, vector<bool>& visited) {
+      15*:   50:        for (int v : bipartiteGraph[u]) {
+       13:   51:            if (!visited[v]) {
+       13:   52:                visited[v] = true;
+      13*:   53:                if (matchTo[v] == -1 || bpm(matchTo[v], visited)) {
+       13:   54:                    matchTo[v] = u;
+       13:   55:                    return true;
+        -:   56:                }
+        -:   57:            }
+        -:   58:        }
+        2:   59:        return false;
+        2:   60:    };
+       17:   61:    for (int u = 0; u < n; ++u) {
+       15:   62:        vector<bool> visited(n, false);
+       15:   63:        bpm(u, visited);
+       15:   64:    }
+        -:   65:    // matchTo[v] = u means v is matched to u
+        -:   66:    // matchedU[i] = true means u is matched to some v
+        2:   67:    vector<bool> matchedU(n, false);
+       17:   68:    for (int v = 0; v < n; ++v) {
+       15:   69:        if (matchTo[v] != -1) {
+       13:   70:            matchedU[matchTo[v]] = true;
+        -:   71:        }
+        -:   72:    }
+        -:   73:    //Step 4: searching for paths
+        2:   74:    vector<vector<int>> paths;
+       17:   75:    for (int u = 0; u < n; ++u) {
+       15:   76:        if (!matchedU[u]) {//start from points that wasnt in any path before
+        2:   77:            vector<int> path;
+        2:   78:            int current = u;
+        2:   79:            path.push_back(current);
+        -:   80:            // building the path
+        -:   81:            while (true) {
+        -:   82:                // find the v that corresponds to current
+       15:   83:                int nextV = -1;
+       72:   84:                for (int v =0 ; v< n; ++v) {
+       70:   85:                    if (matchTo[current] == v) {
+       13:   86:                        nextV = v;
+       13:   87:                        break;
+        -:   88:                    }
+        -:   89:                }
+       15:   90:                if (nextV == -1) break;// no more edges from current to any v_in
+        -:   91:                
+        -:   92:                //move to the next vertex in the path
+       13:   93:                current = nextV;
+       13:   94:                path.insert(path.begin(),current);//add the next vertex to the path
+       13:   95:            }
+        -:   96:            // add the path to the list of paths
+        2:   97:            paths.push_back(path);
+        2:   98:        }
+        -:   99:    }
+        -:  100:
+        -:  101:    // Step 5: format the result
+        2:  102:    std::string result = "Minimal Path Cover: " + std::to_string(paths.size()) + "\n";
+        4:  103:    for (size_t i = 0; i < paths.size(); ++i) {
+        2:  104:        result += "Path " + std::to_string(i + 1) + ": ";
+       17:  105:        for (size_t j = 0; j < paths[i].size(); ++j) {
+       15:  106:            result += std::to_string(paths[i][j]);
+       15:  107:            if (j + 1 < paths[i].size()) result += " -> ";
+        -:  108:        }
+        2:  109:        result += "\n";
+        -:  110:    }
+        2:  111:    return result;
+        2:  112:}
