@@ -4,6 +4,10 @@
 #include <memory>
 #include <string>
 #include "GraphAlgorithm.hpp"
+#include "maxFlowAlgo.hpp"
+#include "mstAlgo.hpp"
+#include "pathCoverAlgo.hpp"
+#include "sccAlgo.hpp"
 enum class AlgorithmType {
     MaxFlow=1,
     MST,

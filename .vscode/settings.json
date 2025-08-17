@@ -51,7 +51,8 @@
         "mutex": "cpp",
         "semaphore": "cpp",
         "stop_token": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "queue": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }

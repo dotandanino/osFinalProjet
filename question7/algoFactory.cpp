@@ -1,8 +1,4 @@
 #include "algoFactory.hpp"
-#include "maxFlowAlgo.hpp"
-#include "mstAlgo.hpp"
-#include "pathCoverAlgo.hpp"
-#include "sccAlgo.hpp"
 
 std::unique_ptr<GraphAlgorithm> createAlgorithm(AlgorithmType algoType) {
     switch(algoType) {
